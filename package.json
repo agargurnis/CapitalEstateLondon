@@ -1,0 +1,32 @@
+{
+	"name": "cap-est-lon",
+	"version": "1.0.0",
+	"description": "Capital Estate London web app",
+	"main": "server.js",
+	"scripts": {
+		"client-install": "npm install --prefix client",
+		"start": "node server.js",
+		"server": "nodemon server.js",
+		"client": "npm start --prefix client",
+		"dev": "concurrently \"npm run server\" \"npm run client\" "
+	},
+	"author": "Arvids Gargurnis",
+	"license": "MIT",
+	"dependencies": {
+		"bcryptjs": "^2.4.3",
+		"body-parser": "^1.18.3",
+		"concurrently": "^3.6.0",
+		"express": "^4.16.3",
+		"gridfs-stream": "^1.1.1",
+		"jsonwebtoken": "^8.3.0",
+		"mongoose": "^5.2.4",
+		"multer": "^1.3.1",
+		"multer-gridfs-storage": "^3.0.1",
+		"passport": "^0.4.0",
+		"passport-jwt": "^4.0.0",
+		"validator": "^10.4.0"
+	},
+	"devDependencies": {
+		"nodemon": "^1.18.3"
+	}
+}

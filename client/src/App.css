@@ -1,28 +1,231 @@
+/* ---------- Global CSS ---------- */
+html,
+body {
+	height: 100%;
+}
 .App {
-  text-align: center;
+	display: flex;
+	width: 100%;
+	flex-direction: column;
+	min-height: 100vh;
+	background-color: #fff;
+	margin-bottom: 272px;
+}
+.App .container {
+	flex: 1 0 auto;
 }
 
-.App-logo {
-  animation: App-logo-spin infinite 20s linear;
-  height: 80px;
+/* ---------- Nav Bar CSS ---------- */
+/* .navbar {
+	background-color: transparent !important;
+	position: absolute;
+	z-index: 1;
+} */
+.nav-item-effect {
+	font-size: 1.5em;
+	font-weight: lighter;
+	margin-right: 0.25em;
+	color: #fff !important;
+}
+.nav-item-effect:hover {
+	color: #50c9ff !important;
+}
+@media only screen and (max-width: 400px) {
+	.nav-item-name {
+		font-size: 1em;
+	}
 }
 
-.App-header {
-  background-color: #222;
-  height: 150px;
-  padding: 20px;
-  color: white;
+/* ---------- Home Page CSS ---------- */
+.search-button {
+	position: absolute;
+	background-color: #50c9ff;
+	color: #fff;
+	top: -70px;
+	margin-left: -2em;
+	padding: 10px 60px;
+}
+.search-button:hover {
+	background-color: #fff;
+	border-color: #50c9ff;
+	color: #50c9ff;
+}
+.search-form {
+	padding: 3em;
+	background-color: #2e3338;
 }
 
-.App-title {
-  font-size: 1.5em;
+.home-carousel .home-carousel-item {
+	height: 700px;
+	width: 100%;
+}
+.home-carousel-item img {
+	position: absolute;
+	width: 100%;
+}
+.carousel-caption h5 {
+	font-size: 4.5em;
+	position: static;
+}
+.carousel-caption p {
+	font-size: 1.2em;
+	position: static;
+}
+@media only screen and (min-width: 300px) {
+	.home-carousel-item img {
+		top: -2px;
+	}
+	.home-carousel .home-carousel-item {
+		height: 200px;
+	}
+}
+@media only screen and (min-width: 445px) {
+	.home-carousel .home-carousel-item {
+		height: 300px;
+	}
+	.search-button {
+		margin-left: -5em;
+	}
+}
+@media only screen and (min-width: 745px) {
+	.home-carousel .home-carousel-item {
+		height: 500px;
+	}
+	.search-button {
+		margin-left: -4em;
+	}
+}
+@media only screen and (min-width: 1050px) {
+	.home-carousel .home-carousel-item {
+		height: 700px;
+	}
+}
+@media only screen and (min-width: 1200px) {
+	.home-carousel-item img {
+		top: -10%;
+	}
+	.search-button {
+		margin-left: -3em;
+	}
+}
+@media only screen and (min-width: 1400px) {
+	.home-carousel-item img {
+		top: -33%;
+	}
+}
+@media only screen and (min-width: 1800px) {
+	.home-carousel-item img {
+		top: -70%;
+	}
+}
+@media only screen and (min-width: 2000px) {
+	.search-button {
+		margin-left: -0.75em;
+	}
 }
 
-.App-intro {
-  font-size: large;
+.property-container {
+	margin: 3em 5em;
 }
 
-@keyframes App-logo-spin {
-  from { transform: rotate(0deg); }
-  to { transform: rotate(360deg); }
+.underlined-title-blue {
+	margin: 0 auto;
+	width: 22.5em;
+	border-bottom: 3px solid #50c9ff;
+	margin-bottom: 50px;
+}
+
+.underlined-title-white {
+	margin: 0 auto;
+	width: 25em;
+	border-bottom: 3px solid #fff;
+}
+
+.property-carousel-item img {
+	height: 300px;
+	width: 100%;
+}
+
+.btn-cel {
+	background-color: #fff;
+	color: #50c9ff;
+}
+
+.btn-cel:hover {
+	background-color: #50c9ff;
+	border-color: #fff;
+	border-width: 2px;
+	border-style: dotted;
+	color: #fff;
+}
+
+.newsletter-box {
+	background-image: url('./components/images/newsletter-london.jpg');
+	height: 200px;
+	background-position: center;
+	background-repeat: no-repeat;
+	background-size: cover;
+}
+
+.parallax {
+	position: fixed;
+	bottom: 0;
+	width: 100%;
+	z-index: -1;
+}
+
+/* ---------- Services Page CSS ---------- */
+.service-container {
+	padding: 1em 7em;
+	color: #fff;
+	background-image: url('./components/images/services-london.jpg');
+	height: 750px;
+	background-position: center;
+	background-repeat: no-repeat;
+	background-size: cover;
+	background-attachment: fixed;
+}
+.service-container p {
+	font-size: 17px;
+}
+.service-nav-item a {
+	color: #50c9ff;
+	margin-bottom: 1em;
+}
+.service-title {
+	margin: 0 auto;
+	width: 10em;
+	border-bottom: 3px solid #50c9ff;
+	margin-bottom: 50px;
+}
+.nav-tabs--vertical {
+	border-bottom: none;
+	border-right: 1px solid #ddd;
+	display: flex;
+	flex-flow: column nowrap;
+}
+.nav-tabs--left {
+	margin: 0 15px;
+}
+.nav-tabs--left .nav-item + .nav-item {
+	margin-top: 0.25rem;
+}
+.nav-tabs--left .nav-link {
+	transition: border-color 0.125s ease-in;
+	white-space: nowrap;
+}
+.nav-tabs--left .nav-link:hover {
+	background-color: #f7f7f7;
+	border-color: transparent;
+}
+.nav-tabs--left .nav-link.active {
+	border-bottom-color: #ddd;
+	border-right-color: #fff;
+	border-bottom-left-radius: 0.25rem;
+	border-top-right-radius: 0;
+	margin-right: -1px;
+}
+.nav-tabs--left .nav-link.active:hover {
+	background-color: #fff;
+	border-color: #50c9ff #fff #50c9ff #50c9ff;
 }

@@ -11,6 +11,7 @@
 		"react-dom": "^16.4.1",
 		"react-moment": "^0.7.9",
 		"react-redux": "^5.0.7",
+		"react-responsive": "^5.0.0",
 		"react-router-dom": "^4.3.1",
 		"react-scripts": "1.1.4",
 		"redux": "^4.0.0",
@@ -20,7 +21,7 @@
 		"start": "react-scripts start",
 		"build": "react-scripts build",
 		"test": "react-scripts test --env=jsdom",
-		"eject": "react-scripts ejesct"
+		"eject": "react-scripts eject"
 	},
 	"proxy": "http://localhost:5000"
 }

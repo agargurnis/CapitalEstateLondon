@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import TextFieldGroup from '../common/TextFieldGroup';
 import SelectListGroup from '../common/SelectListGroup';
-import PropTypes from 'prop-types';
+// import PropTypes from 'prop-types';
 
 class Searchbar extends Component {
 	constructor(props) {

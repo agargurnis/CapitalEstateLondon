@@ -5,7 +5,13 @@ import ContactQueryForm from './ContactQueryForm';
 
 class ContactsPage extends Component {
 	render() {
-		return <div />;
+		return (
+			<div>
+				<ContactMap />
+				<ContactIconBox />
+				<ContactQueryForm />
+			</div>
+		);
 	}
 }
 

@@ -6,8 +6,8 @@ import { GET_ERRORS, SET_CURRENT_USER } from './types';
 // Register user
 export const registerUser = (userData, history) => dispatch => {
 	axios
-		.post('/api/users/register', userData)
-		.then(res => history.push('/login'))
+		.post('/api/auth/register', userData)
+		.then(res => history.push('/admin'))
 		.catch(err =>
 			dispatch({
 				type: GET_ERRORS,
@@ -18,7 +18,7 @@ export const registerUser = (userData, history) => dispatch => {
 // Login - Get user Token
 export const loginUser = userData => dispatch => {
 	axios
-		.post('/api/users/login', userData)
+		.post('/api/auth/login', userData)
 		.then(res => {
 			// Save to local storage
 			const { token } = res.data;
@@ -50,7 +50,7 @@ export const setCurrentUser = decoded => {
 // Log out user
 export const logoutUser = () => dispatch => {
 	// Remove token from local storage
-	localStorage.removeItem('jwtToekn');
+	localStorage.removeItem('jwtToken');
 	// Remove Auth header for future requests
 	setAuthToken(false);
 	// Set current user to {} which will set isAuthenticated to false

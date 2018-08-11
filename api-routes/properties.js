@@ -28,12 +28,12 @@ const upload = multer({
 });
 
 // Load post model
-const Post = require('../models/Property');
+const Property = require('../models/Property');
 
 // Load validator
 const validatePropertyInput = require('../validation/property');
 
-// @route   GET api/properties
+// @route   POST api/properties
 // @desc    Create property
 // @access  Private
 router.post(
@@ -49,18 +49,22 @@ router.post(
 		}
 		// Create new post object
 		const newProperty = new Property({
-			location: req.body.location,
-			area: req.body.area,
+			district: req.body.district,
+			address: req.body.address,
+			post_code: req.body.post_code,
+			area_sqm: req.body.area_sqm,
 			nr_of_rooms: req.body.nr_of_rooms,
 			nr_of_bedrooms: req.body.nr_of_bedrooms,
 			nr_of_bathrooms: req.body.nr_of_bathrooms,
+			nr_of_parking: req.body.nr_of_parking,
 			ownership_type: req.body.ownership_type,
 			description: req.body.description,
 			price: req.body.price,
 			lat: req.body.lat,
 			lon: req.body.lon,
-			images: req.files.path
+			property_images: req.files.map(file => file.path)
 		});
+		console.log(newProperty);
 		// Save post to db
 		newProperty.save().then(property => res.json(property));
 	}

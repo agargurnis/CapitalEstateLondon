@@ -3,35 +3,37 @@ import { Link } from 'react-router-dom';
 import mdLogo from '../images/medium-logo.png';
 import lgLogo from '../images/large-logo.png';
 import MediaQuery from 'react-responsive';
+import PropTypes from 'prop-types';
+import { connect } from 'react-redux';
+import { logoutUser } from '../../actions/authActions';
 
-class Navbar extends Component {
+class AdminNavbar extends Component {
+	onLogoutClick(e) {
+		e.preventDefault();
+		this.props.logoutUser();
+	}
+
 	render() {
-		const navLinks = (
+		const adminLinks = (
 			<ul className="navbar-nav ml-auto">
 				<li className="nav-item">
-					<Link className="nav-link nav-item-effect" to="/">
-						Home
+					<Link className="nav-link nav-item-effect" to="/managenewsletter">
+						Manage Newsletter
 					</Link>
 				</li>
 				<li className="nav-item">
-					<Link className="nav-link nav-item-effect" to="/properties">
-						Properties
+					<Link className="nav-link nav-item-effect" to="/manageproperties">
+						Manage Properties
 					</Link>
 				</li>
 				<li className="nav-item">
-					<Link className="nav-link nav-item-effect" to="/services">
-						Services
-					</Link>
-				</li>
-				<li className="nav-item">
-					<Link className="nav-link nav-item-effect" to="/about">
-						About
-					</Link>
-				</li>
-				<li className="nav-item">
-					<Link className="nav-link nav-item-effect" to="/contacts">
-						Contacts
-					</Link>
+					<a
+						href=""
+						onClick={this.onLogoutClick.bind(this)}
+						className="nav-link nav-item-effect"
+					>
+						Log Out
+					</a>
 				</li>
 			</ul>
 		);
@@ -63,11 +65,23 @@ class Navbar extends Component {
 				</button>
 
 				<div className="collapse navbar-collapse" id="mobile-nav">
-					{navLinks}
+					{adminLinks}
 				</div>
 			</nav>
 		);
 	}
 }
 
-export default Navbar;
+AdminNavbar.propTypes = {
+	logoutUser: PropTypes.func.isRequired,
+	auth: PropTypes.object.isRequired
+};
+
+const mapStateToProps = state => ({
+	auth: state.auth
+});
+
+export default connect(
+	mapStateToProps,
+	{ logoutUser }
+)(AdminNavbar);

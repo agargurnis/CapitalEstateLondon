@@ -8,6 +8,7 @@ const TextFieldGroup = ({
 	value,
 	label,
 	error,
+	success,
 	type,
 	info,
 	onChange,
@@ -18,9 +19,13 @@ const TextFieldGroup = ({
 			{info && <p className="form-text text-muted">{info}</p>}
 			<input
 				type={type}
-				className={classnames('form-control form-control-lg', {
-					'is-invalid': error
-				})}
+				className={classnames(
+					'form-control form-control-lg',
+					{
+						'is-invalid': error
+					},
+					{ 'is-valid': success }
+				)}
 				placeholder={placeholder}
 				name={name}
 				value={value}
@@ -37,6 +42,7 @@ TextFieldGroup.propTypes = {
 	placeholder: PropTypes.string,
 	value: PropTypes.string.isRequired,
 	error: PropTypes.string,
+	success: PropTypes.bool,
 	info: PropTypes.string,
 	type: PropTypes.string.isRequired,
 	onChange: PropTypes.func.isRequired,

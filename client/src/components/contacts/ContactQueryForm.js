@@ -48,7 +48,7 @@ class ContactQueryForm extends Component {
 								name="name"
 								value={this.state.name}
 								onChange={this.onChange}
-								info="Name *"
+								info="Full Name *"
 							/>
 						</div>
 						<div className="col">

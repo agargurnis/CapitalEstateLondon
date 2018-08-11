@@ -3,10 +3,6 @@ const Schema = mongoose.Schema;
 
 // Create Schema
 const NewsletterSchema = new Schema({
-	name: {
-		type: String,
-		required: true
-	},
 	email: {
 		type: String,
 		required: true

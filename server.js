@@ -4,8 +4,7 @@ const bodyParser = require('body-parser');
 const passport = require('passport');
 
 const properties = require('./api-routes/properties');
-const services = require('./api-routes/services');
-const contacts = require('./api-routes/contacts');
+const newsletter = require('./api-routes/newsletter');
 const auth = require('./api-routes/auth');
 
 const app = express();
@@ -36,9 +35,8 @@ app.use(passport.initialize());
 require('./config/passport')(passport);
 
 // Use routes
-// app.use('/api/properties', properties);
-app.use('/api/services', services);
-app.use('/api/contacts', contacts);
+app.use('/api/properties', properties);
+app.use('/api/newsletter', newsletter);
 app.use('/api/auth', auth);
 
 const port = process.env.PORT || 5000;

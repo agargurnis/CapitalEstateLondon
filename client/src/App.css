@@ -1,8 +1,4 @@
 /* ---------- Global CSS ---------- */
-html,
-body {
-	height: 100%;
-}
 .public-pages {
 	position: relative;
 	overflow-x: hidden;
@@ -12,8 +8,14 @@ body {
 	flex-basis: auto;
 	min-height: 100vh;
 	background-color: #fff;
-	margin-bottom: 272px;
+	margin-bottom: 312px;
 	z-index: 2;
+}
+
+@media only screen and (min-width: 400px) {
+	.public-pages {
+		margin-bottom: 272px;
+	}
 }
 
 /* ---------- Nav Bar CSS ---------- */
@@ -67,15 +69,18 @@ body {
 	font-size: 1.2em;
 	position: static;
 }
-@media only screen and (min-width: 300px) {
+@media screen and (min-width: 300px) {
 	.home-carousel-item img {
 		top: -2px;
 	}
 	.home-carousel .home-carousel-item {
 		height: 200px;
 	}
+	.search-button {
+		margin-left: -5.2em;
+	}
 }
-@media only screen and (min-width: 445px) {
+@media screen and (min-width: 445px) {
 	.home-carousel .home-carousel-item {
 		height: 300px;
 	}
@@ -83,7 +88,7 @@ body {
 		margin-left: -5em;
 	}
 }
-@media only screen and (min-width: 745px) {
+@media screen and (min-width: 745px) {
 	.home-carousel .home-carousel-item {
 		height: 500px;
 	}
@@ -91,12 +96,12 @@ body {
 		margin-left: -4em;
 	}
 }
-@media only screen and (min-width: 1050px) {
+@media screen and (min-width: 1050px) {
 	.home-carousel .home-carousel-item {
 		height: 700px;
 	}
 }
-@media only screen and (min-width: 1200px) {
+@media screen and (min-width: 1200px) {
 	.home-carousel-item img {
 		top: -10%;
 	}
@@ -104,24 +109,35 @@ body {
 		margin-left: -3em;
 	}
 }
-@media only screen and (min-width: 1400px) {
+@media screen and (min-width: 1400px) {
 	.home-carousel-item img {
 		top: -33%;
 	}
 }
-@media only screen and (min-width: 1800px) {
+@media screen and (min-width: 1800px) {
 	.home-carousel-item img {
 		top: -70%;
 	}
 }
-@media only screen and (min-width: 2000px) {
+@media screen and (min-width: 2000px) {
 	.search-button {
 		margin-left: -0.75em;
 	}
 }
 
+.the-card {
+	margin: 0 auto;
+	max-width: 600px;
+}
+
 .property-container {
-	margin: 3em 5em;
+	margin: 0;
+}
+
+@media screen and (min-width: 990px) {
+	.property-container {
+		margin: 3em;
+	}
 }
 
 .underlined-title-blue {
@@ -142,6 +158,14 @@ body {
 	width: 100%;
 }
 
+@media screen and (max-width: 580px) {
+	.hide-on-xs {
+		display: none;
+	}
+}
+
+/* ---------- Newsletter Box CSS ---------- */
+
 .btn-cel {
 	background-color: #fff;
 	color: #50c9ff;
@@ -157,10 +181,20 @@ body {
 
 .newsletter-box {
 	background-image: url('./components/images/newsletter-london.jpg');
-	height: 200px;
+	height: 230px;
 	background-position: center;
 	background-repeat: no-repeat;
 	background-size: cover;
+}
+
+@media screen and (min-width: 400px) {
+	.newsletter-box {
+		height: 200px;
+	}
+}
+
+.newsletter-col {
+	width: auto !important;
 }
 
 .parallax {
@@ -168,7 +202,6 @@ body {
 	bottom: 0;
 	width: 100%;
 }
-
 /* ---------- Services Page CSS ---------- */
 .service-container {
 	padding: 1em 7em;
@@ -274,7 +307,7 @@ body {
 	border-color: #50c9ff;
 	color: #50c9ff;
 }
-h6 {
+.contacts-white-text {
 	color: #fff;
 	margin-top: 15px;
 	font-size: 18px;
@@ -283,6 +316,10 @@ h6 {
 /* ---------- About Page CSS ---------- */
 .profile-pic {
 	height: 500px;
+}
+
+.rounded-circle {
+	margin-left: 3rem;
 }
 
 .profile-name {
@@ -438,6 +475,27 @@ h6 {
 	border-radius: 6px;
 }
 
+@media screen and (max-width: 767px) {
+	.profile-name {
+		text-align: center;
+	}
+	.rounded-circle {
+		margin-left: 0;
+	}
+	.profile-pic {
+		height: 350px;
+	}
+	.about-why-bubble {
+		width: 87%;
+	}
+}
+
+@media screen and (max-width: 500px) {
+	.about-why-bubble {
+		width: 80%;
+	}
+}
+
 @media screen and (max-width: 600px) {
 	.timeline::after {
 		left: 31px;
@@ -524,11 +582,31 @@ h6 {
 	color: #50c9ff;
 }
 
-.property {
+.property-card {
 	flex-basis: calc(50% - 20px);
 	margin: 0 10px 10px 10px;
+	border: 1px solid #e9e9e9;
 }
-.property:hover {
+
+@media screen and (max-width: 750px) {
+	.property-card {
+		flex-basis: calc(100% - 20px);
+	}
+}
+
+@media screen and (min-width: 1100px) {
+	.property-card {
+		flex-basis: calc(33.3% - 20px);
+	}
+}
+
+@media screen and (min-width: 1800px) {
+	.property-card {
+		flex-basis: calc(25% - 20px);
+	}
+}
+
+.property-card:hover {
 	opacity: 0.9;
 	cursor: pointer;
 }
@@ -538,13 +616,24 @@ h6 {
 	background-position: center;
 }
 
-.property-title {
-	margin-top: 10px;
-	font-weight: bold;
+.property-price {
+	margin-top: -10px;
+}
+
+.price-tag {
+	margin: 0 auto;
+	text-align: center;
+	background-color: #50c9ff;
+	width: 100px;
+	height: 22px;
+}
+
+.property-location p {
+	font-size: 17px;
 }
 
 .marker {
-	width: 48px;
+	width: 108px;
 	background-color: #fff;
 	border: 1px solid #999;
 	border-radius: 4px;
@@ -553,8 +642,28 @@ h6 {
 	padding: 4px 0;
 }
 .marker.selected {
+	position: relative;
 	background-color: #50c9ff;
+	z-index: 2;
 	border-color: #fff;
+}
+
+.card-icon {
+	color: #999;
+}
+
+@media screen and (max-width: 780px) {
+	.hide-below-eh {
+		display: none;
+	}
+}
+@media screen and (max-width: 576px) {
+	.property-search-bar {
+		width: 80%;
+	}
+	.property-search-button {
+		width: auto;
+	}
 }
 
 /* ---------- Admin Page CSS ---------- */
@@ -598,7 +707,7 @@ h6 {
 .admin-form-group input {
 	height: 42px;
 	border-radius: 5px;
-	border: 0;
+	/* border: 0; */
 	padding-left: 54px;
 	font-size: 18px;
 }
@@ -636,4 +745,14 @@ h6 {
 
 .login-icon {
 	margin-right: 5px;
+}
+
+.stats {
+	height: 1650px;
+	width: 100%;
+	background-image: url('./components/images/statistics-dashboard.png');
+	background-position: center;
+	background-repeat: no-repeat;
+	background-size: cover;
+	/* background-attachment: fixed; */
 }

@@ -1,32 +1,36 @@
 import React, { Component } from 'react';
-import FlatCard from './PropertyCard';
+import PropertyCard from './PropertyCard';
 import GoogleMapReact from 'google-map-react';
 import PropertyMarker from './PropertyMarker';
 import SelectListGroup from '../common/SelectListGroup';
 
-class Flat extends Component {
+import PropTypes from 'prop-types';
+import { connect } from 'react-redux';
+import { getProperties } from '../../actions/propertyActions';
+import Spinner from '../common/Spinner';
+
+class PropertyPage extends Component {
 	constructor(props) {
 		super(props);
 		this.state = {
+			minPrice: 0,
+			maxPrice: 100000000,
+			minBeds: 0,
+			maxBeds: 20,
+			parking: 0,
+			selectedProperty: null,
 			properties: [],
 			allProperties: [],
-			selectedProperty: null,
-			search: ''
+			searchValue: ''
 		};
+
+		this.onChange = this.onChange.bind(this);
+		this.handleSearch = this.handleSearch.bind(this);
+		this.selectProperty = this.selectProperty.bind(this);
 	}
 
 	componentDidMount() {
-		const url =
-			'https://raw.githubusercontent.com/lewagon/flats-boilerplate/master/flats.json';
-
-		fetch(url)
-			.then(response => response.json())
-			.then(data => {
-				this.setState({
-					properties: data,
-					allProperties: data
-				});
-			});
+		this.props.getProperties();
 	}
 
 	selectProperty = property => {
@@ -35,79 +39,171 @@ class Flat extends Component {
 		});
 	};
 
-	handleSearch = event => {
+	onChange(e) {
+		this.setState({ [e.target.name]: e.target.value });
+	}
+
+	handleSearch = e => {
 		this.setState({
-			search: event.target.value,
-			properties: this.state.allProperties.filter(property =>
-				new RegExp(event.target.value, 'i').exec(property.name)
-			)
+			searchValue: e.target.value.toLocaleLowerCase()
 		});
 	};
 
 	render() {
-		// Select options for number of rooms
-		const bedNumberOptions = [
+		const { properties, loading } = this.props.property;
+		let propertyContent;
+		let propertyMarkers;
+
+		if (properties === null || loading) {
+			propertyContent = <Spinner />;
+		} else {
+			const filteredList = properties.filter(
+				property =>
+					(property.address
+						.toLocaleLowerCase()
+						.includes(this.state.searchValue) &&
+						parseInt(property.price.replace(/,/g, ''), 10) >=
+							this.state.minPrice &&
+						parseInt(property.price.replace(/,/g, ''), 10) <=
+							this.state.maxPrice &&
+						property.nr_of_bedrooms >= this.state.minBeds &&
+						property.nr_of_bedrooms <= this.state.maxBeds &&
+						property.nr_of_parking >= this.state.parking) ||
+					(property.district
+						.toLocaleLowerCase()
+						.includes(this.state.searchValue) &&
+						parseInt(property.price.replace(/,/g, ''), 10) >=
+							this.state.minPrice &&
+						parseInt(property.price.replace(/,/g, ''), 10) <=
+							this.state.maxPrice &&
+						property.nr_of_bedrooms >= this.state.minBeds &&
+						property.nr_of_bedrooms <= this.state.maxBeds &&
+						property.nr_of_parking >= this.state.parking) ||
+					(property.post_code
+						.toLocaleLowerCase()
+						.includes(this.state.searchValue) &&
+						parseInt(property.price.replace(/,/g, ''), 10) >=
+							this.state.minPrice &&
+						parseInt(property.price.replace(/,/g, ''), 10) <=
+							this.state.maxPrice &&
+						property.nr_of_bedrooms >= this.state.minBeds &&
+						property.nr_of_bedrooms <= this.state.maxBeds &&
+						property.nr_of_parking >= this.state.parking)
+			);
+
+			propertyContent = filteredList.map(property => (
+				<PropertyCard
+					key={property._id}
+					property={property}
+					selectProperty={this.selectProperty}
+				/>
+			));
+
+			propertyMarkers = filteredList.map(property => {
+				return (
+					<PropertyMarker
+						key={property._id}
+						lat={property.lat}
+						lng={property.lon}
+						text={property.price}
+						selected={property === this.state.selectedProperty}
+					/>
+				);
+			});
+		}
+		// Select options for min beds
+		const minBedOptions = [
 			{ label: 'Any', value: 0 },
-			{ label: '1', value: '1' },
-			{ label: '2', value: '2' },
-			{ label: '3', value: '3' },
-			{ label: '4', value: '4' },
-			{ label: '5', value: '5' },
-			{ label: '6+', value: '6+' }
+			{ label: '1', value: 1 },
+			{ label: '2', value: 2 },
+			{ label: '3', value: 3 },
+			{ label: '4', value: 4 },
+			{ label: '5', value: 5 },
+			{ label: '6', value: 6 }
 		];
-		// Select options for price
-		const priceOptions = [
+		// Select options for max beds
+		const maxBedOptions = [
+			{ label: 'Any', value: 20 },
+			{ label: '1', value: 1 },
+			{ label: '2', value: 2 },
+			{ label: '3', value: 3 },
+			{ label: '4', value: 4 },
+			{ label: '5', value: 5 },
+			{ label: '10', value: 10 },
+			{ label: '15', value: 15 }
+		];
+		// Select options for max price
+		const maxPriceOptions = [
+			{ label: 'Any', value: 100000000 },
+			{ label: '£500,000', value: 500000 },
+			{ label: '£750,000', value: 750000 },
+			{ label: '£1,000,000', value: 1000000 },
+			{ label: '£1,250,000', value: 1250000 },
+			{ label: '£1,500,000', value: 1500000 },
+			{ label: '£1,750,000', value: 1750000 },
+			{ label: '£2,000,000', value: 2000000 },
+			{ label: '£2,500,000', value: 2500000 },
+			{ label: '£3,000,000', value: 3000000 },
+			{ label: '£3,500,000', value: 3500000 },
+			{ label: '£4,000,000', value: 4000000 },
+			{ label: '£5,000,000', value: 5000000 },
+			{ label: '£10,000,000', value: 10000000 },
+			{ label: '£25,000,000', value: 25000000 },
+			{ label: '£50,000,000', value: 50000000 }
+		];
+		// Select options for min price
+		const minPriceOptions = [
 			{ label: 'Any', value: 0 },
-			{ label: '£500k', value: '500' },
-			{ label: '£750k', value: '750' },
-			{ label: '£1m', value: '1000' },
-			{ label: '£1.25m', value: '1250' },
-			{ label: '£1.5m', value: '1500' },
-			{ label: '£1.75m', value: '1750' },
-			{ label: '£2m', value: '2000' },
-			{ label: '£2.5m', value: '2500' },
-			{ label: '£3m', value: '3000' },
-			{ label: '£3.5m', value: '3500' },
-			{ label: '£4m', value: '4000' },
-			{ label: '£5m+', value: '5000+' }
+			{ label: '£500,000', value: 500000 },
+			{ label: '£750,000', value: 750000 },
+			{ label: '£1,000,000', value: 1000000 },
+			{ label: '£1,250,000', value: 1250000 },
+			{ label: '£1,500,000', value: 1500000 },
+			{ label: '£1,750,000', value: 1750000 },
+			{ label: '£2,000,000', value: 2000000 },
+			{ label: '£2,500,000', value: 2500000 },
+			{ label: '£3,000,000', value: 3000000 },
+			{ label: '£3,500,000', value: 3500000 },
+			{ label: '£4,000,000', value: 4000000 },
+			{ label: '£5,000,000', value: 5000000 }
 		];
 		// Select options for parking
 		const parkingOptions = [
-			{ label: 'Parking', value: 0 },
-			{ label: '1+', value: '1' },
-			{ label: '2+', value: '2' },
-			{ label: '3+', value: '3' }
+			{ label: 'Any', value: 0 },
+			{ label: '1', value: 1 },
+			{ label: '2', value: 2 },
+			{ label: '3', value: 3 }
 		];
 
+		const zoom = 14;
+
 		let center = {
-			lat: 48.8566,
-			lng: 2.3522
+			lat: 51.5074,
+			lng: -0.1278
 		};
 
 		if (this.state.selectedProperty) {
 			center = {
 				lat: this.state.selectedProperty.lat,
-				lng: this.state.selectedProperty.lng
+				lng: this.state.selectedProperty.lon
 			};
 		}
-
-		const zoom = 14;
 
 		return (
 			<div>
 				<div className="search-container">
-					<div className="row">
-						<div className="col-10 mr-0 pr-0">
+					<div className="row justify-content-center">
+						<div className="col-sm-10 col-xs-10 property-search-bar mr-0 pr-0">
 							<div className="search">
 								<input
 									type="text"
-									placeholder="What are you looking for?"
-									value={this.state.search}
+									placeholder="You can search by street, district or post code..."
+									value={this.state.searchValue}
 									onChange={this.handleSearch}
 								/>
 							</div>
 						</div>
-						<div className="col-2 align-self-center pl-0 ml-0">
+						<div className="col-sm-2 col-xs-2 property-search-button align-self-center pl-0 ml-0">
 							<div>
 								<button
 									className="more-button"
@@ -117,53 +213,53 @@ class Flat extends Component {
 									aria-expanded="false"
 									aria-controls="collapseMoreOptions"
 								>
-									More Options
+									More <span className="hide-below-eh">Options</span>
 								</button>
 							</div>
 						</div>
 					</div>
 					<div className="row collapse px-2" id="collapseMoreOptions">
-						<div className="col">
+						<div className="col-sm col-xs-12">
 							<SelectListGroup
 								placeholder="Any"
 								name="minPrice"
 								value={this.state.minPrice}
 								onChange={this.onChange}
-								options={priceOptions}
+								options={minPriceOptions}
 								info="Min Price"
 							/>
 						</div>
-						<div className="col">
+						<div className="col-sm col-xs-12">
 							<SelectListGroup
 								placeholder="Any"
 								name="maxPrice"
 								value={this.state.maxPrice}
 								onChange={this.onChange}
-								options={priceOptions}
+								options={maxPriceOptions}
 								info="Max Price"
 							/>
 						</div>
-						<div className="col">
+						<div className="col-sm col-xs-12">
 							<SelectListGroup
 								placeholder="Any"
-								name="parking"
+								name="minBeds"
 								value={this.state.minBeds}
 								onChange={this.onChange}
-								options={bedNumberOptions}
+								options={minBedOptions}
 								info="Min Beds"
 							/>
 						</div>
-						<div className="col">
+						<div className="col-sm col-xs-12">
 							<SelectListGroup
 								placeholder="Any"
-								name="parking"
+								name="maxBeds"
 								value={this.state.maxBeds}
 								onChange={this.onChange}
-								options={bedNumberOptions}
+								options={maxBedOptions}
 								info="Max Beds"
 							/>
 						</div>
-						<div className="col">
+						<div className="col-sm col-xs-12">
 							<SelectListGroup
 								placeholder="Any"
 								name="parking"
@@ -177,33 +273,12 @@ class Flat extends Component {
 				</div>
 				<div className="flex-wrapper">
 					<div className="properties-container">
-						<div className="properties">
-							{this.state.properties.map(property => {
-								return (
-									<FlatCard
-										key={property.name}
-										property={property}
-										selectProperty={this.selectProperty}
-									/>
-								);
-							})}
-						</div>
+						<div className="properties">{propertyContent}</div>
 					</div>
-
 					<div className="map-container">
 						<div className="the-map">
 							<GoogleMapReact center={center} zoom={zoom}>
-								{this.state.properties.map(property => {
-									return (
-										<PropertyMarker
-											key={property.name}
-											lat={property.lat}
-											lng={property.lng}
-											text={property.price}
-											selected={property === this.state.selectedProperty}
-										/>
-									);
-								})}
+								{propertyMarkers}
 							</GoogleMapReact>
 						</div>
 					</div>
@@ -212,5 +287,17 @@ class Flat extends Component {
 		);
 	}
 }
+PropertyPage.propTypes = {
+	getProperties: PropTypes.func.isRequired,
+	property: PropTypes.object.isRequired
+};
 
-export default Flat;
+const mapStateToProps = state => ({
+	property: state.property,
+	selectedProperty: state.selectedProperty
+});
+
+export default connect(
+	mapStateToProps,
+	{ getProperties }
+)(PropertyPage);

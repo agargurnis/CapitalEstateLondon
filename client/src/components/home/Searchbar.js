@@ -118,7 +118,7 @@ class Searchbar extends Component {
 								info="Location"
 							/>
 						</div>
-						<div className="col-md-3 col-sm-6">
+						<div className="col-md-3 col-sm-6 hide-on-xs">
 							<SelectListGroup
 								placeholder="Property Type"
 								name="property_type"
@@ -128,7 +128,7 @@ class Searchbar extends Component {
 								info="Type"
 							/>
 						</div>
-						<div className="col-md-3 col-sm-6">
+						<div className="col-md-3 col-sm-6 hide-on-xs">
 							<SelectListGroup
 								placeholder="Property Status"
 								name="property_status"
@@ -140,7 +140,7 @@ class Searchbar extends Component {
 						</div>
 					</div>
 					<div className="row">
-						<div className="col-sm-2 col-xs-12">
+						<div className="col-sm-2 col-xs-12 hide-on-xs">
 							<SelectListGroup
 								placeholder="Parking"
 								name="parking"
@@ -150,7 +150,7 @@ class Searchbar extends Component {
 								info="Parking"
 							/>
 						</div>
-						<div className="col-sm-2 col-xs-12">
+						<div className="col-sm-2 col-xs-12 hide-on-xs">
 							<SelectListGroup
 								placeholder="Number of Bathrooms"
 								name="bathrooms"
@@ -160,7 +160,7 @@ class Searchbar extends Component {
 								info="Bathrooms"
 							/>
 						</div>
-						<div className="col-sm-2 col-xs-12">
+						<div className="col-sm-2 col-xs-12 hide-on-xs">
 							<SelectListGroup
 								placeholder="Number of Bedrooms"
 								name="bedrooms"
@@ -170,7 +170,7 @@ class Searchbar extends Component {
 								info="Bedrooms"
 							/>
 						</div>
-						<div className="col-sm-3 col-xs-12">
+						<div className="col-sm-3 col-xs-12 hide-on-xs">
 							<TextFieldGroup
 								placeholder="Price"
 								name="price"
@@ -179,7 +179,7 @@ class Searchbar extends Component {
 								info="Price"
 							/>
 						</div>
-						<div className="col-sm-3 col-xs-12">
+						<div className="col-sm-3 col-xs-12 hide-on-xs">
 							<TextFieldGroup
 								placeholder="Area"
 								name="area"

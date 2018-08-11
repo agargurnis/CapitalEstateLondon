@@ -4,20 +4,31 @@ const isEmpty = require('./is-empty');
 module.exports = function validatePropertyInput(data) {
 	let errors = {};
 
-	data.location = !isEmpty(data.location) ? data.location : '';
+	data.district = !isEmpty(data.district) ? data.district : '';
+	data.address = !isEmpty(data.address) ? data.address : '';
+	data.post_code = !isEmpty(data.post_code) ? data.post_code : '';
 	data.nr_of_bedrooms = !isEmpty(data.nr_of_bedrooms)
 		? data.nr_of_bedrooms
 		: '';
 	data.nr_of_bathrooms = !isEmpty(data.nr_of_bathrooms)
 		? data.nr_of_bathrooms
 		: '';
+	data.nr_of_parking = !isEmpty(data.nr_of_parking) ? data.nr_of_parking : '';
 	data.price = !isEmpty(data.price) ? data.price : '';
 	data.description = !isEmpty(data.description) ? data.description : '';
 	data.lat = !isEmpty(data.lat) ? data.lat : '';
 	data.lon = !isEmpty(data.lon) ? data.lon : '';
 
-	if (validator.isEmpty(data.location)) {
-		errors.location = 'Location field is required';
+	if (validator.isEmpty(data.district)) {
+		errors.district = 'District field is required';
+	}
+
+	if (validator.isEmpty(data.address)) {
+		errors.address = 'Address field is required';
+	}
+
+	if (validator.isEmpty(data.post_code)) {
+		errors.post_code = 'Post code field is required';
 	}
 
 	if (validator.isEmpty(data.nr_of_bedrooms)) {
@@ -26,6 +37,10 @@ module.exports = function validatePropertyInput(data) {
 
 	if (validator.isEmpty(data.nr_of_bathrooms)) {
 		errors.nr_of_bathrooms = 'Number of bathrooms field is required';
+	}
+
+	if (validator.isEmpty(data.nr_of_parking)) {
+		errors.nr_of_parking = 'Number of parking spaces field is required';
 	}
 
 	if (validator.isEmpty(data.price)) {

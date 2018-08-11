@@ -24,11 +24,11 @@ class FeaturedProperties extends Component {
 	render() {
 		return (
 			<div className="property-container">
-				<div className="underlined-title-blue">
+				<div className="underlined-title-blue mt-3">
 					<h1>Featured Properties</h1>
 				</div>
-				<div className="card-deck">
-					<div className="card">
+				<div className="row">
+					<div className="col-lg-4 col-md-12 the-card">
 						<div
 							id="carouselOneControls"
 							className="property-carousel carousel slide"
@@ -103,7 +103,7 @@ class FeaturedProperties extends Component {
 						</div>
 					</div>
 
-					<div className="card">
+					<div className="col-lg-4 col-md-12 the-card">
 						<div
 							id="carouselTwoControls"
 							className="property-carousel carousel slide"
@@ -213,7 +213,7 @@ class FeaturedProperties extends Component {
 						</div>
 					</div>
 
-					<div className="card">
+					<div className="col-lg-4 col-md-12 the-card">
 						<div
 							id="carouselThreeControls"
 							className="property-carousel carousel slide"

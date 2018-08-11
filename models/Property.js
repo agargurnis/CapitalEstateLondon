@@ -3,12 +3,20 @@ const Schema = mongoose.Schema;
 
 // Create Schema
 const PropertySchema = new Schema({
-	location: {
+	district: {
 		type: String,
 		required: true
 	},
-	area: {
-		type: String
+	address: {
+		type: String,
+		required: true
+	},
+	post_code: {
+		type: String,
+		required: true
+	},
+	area_sqm: {
+		type: Number
 	},
 	nr_of_bedrooms: {
 		type: Number,
@@ -21,8 +29,12 @@ const PropertySchema = new Schema({
 	nr_of_rooms: {
 		type: Number
 	},
-	price: {
+	nr_of_parking: {
 		type: Number,
+		required: true
+	},
+	price: {
+		type: String,
 		required: true
 	},
 	ownership_type: {
@@ -32,21 +44,19 @@ const PropertySchema = new Schema({
 		type: String,
 		required: true
 	},
-	geolocation: {
-		lat: {
-			type: Number,
-			required: true
-		},
-		lon: {
-			type: Number,
-			required: true
-		}
+	lat: {
+		type: Number,
+		required: true
+	},
+	lon: {
+		type: Number,
+		required: true
 	},
 	date: {
 		type: Date,
 		default: Date.now
 	},
-	images: [
+	property_images: [
 		{
 			type: String,
 			required: true

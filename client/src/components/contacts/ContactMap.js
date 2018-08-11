@@ -9,7 +9,7 @@ class ContactMap extends Component {
 					title="google-map"
 					width="100%"
 					height="300"
-					frameborder="0"
+					frameBorder="0"
 					style={{ border: '0' }}
 				/>
 			</div>

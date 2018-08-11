@@ -14,28 +14,30 @@ class ContactIconBox extends Component {
 						</div>
 						<div className="row icon-row">
 							<div className="col text-center">
-								<span class="fa-stack fa-2x">
-									<i class="far fa-circle fa-stack-2x" />
-									<i class="contact-icon fas fa-map-marker-alt fa-stack-1x" />
+								<span className="fa-stack fa-2x">
+									<i className="far fa-circle fa-stack-2x" />
+									<i className="contact-icon fas fa-map-marker-alt fa-stack-1x" />
 								</span>
-								<h6>
+								<h6 className="contacts-white-text">
 									{' '}
 									6 Porter Street, Marylebone<br /> London, W1U 6DD{' '}
 								</h6>
 							</div>
 							<div className="col text-center">
-								<span class="fa-stack fa-2x">
-									<i class="far fa-circle fa-stack-2x" />
-									<i class="contact-icon fas fa-at fa-stack-1x" />
+								<span className="fa-stack fa-2x">
+									<i className="far fa-circle fa-stack-2x" />
+									<i className="contact-icon fas fa-at fa-stack-1x" />
 								</span>
-								<h6>info@capitalestatelondon.com</h6>
+								<h6 className="contacts-white-text">
+									info@capitalestatelondon.com
+								</h6>
 							</div>
 							<div className="col text-center">
-								<span class="fa-stack fa-2x">
-									<i class="far fa-circle fa-stack-2x" />
-									<i class="contact-icon fas fa-mobile-alt fa-stack-1x" />
+								<span className="fa-stack fa-2x">
+									<i className="far fa-circle fa-stack-2x" />
+									<i className="contact-icon fas fa-mobile-alt fa-stack-1x" />
 								</span>
-								<h6>+44 (0) 788 6879 176</h6>
+								<h6 className="contacts-white-text">+44 (0) 788 6879 176</h6>
 							</div>
 						</div>
 					</div>

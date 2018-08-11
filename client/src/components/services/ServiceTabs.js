@@ -154,7 +154,7 @@ class ServiceTabs extends Component {
 							</a>
 						</li>
 					</ul>
-					<div className="tab-content">
+					<div className="tab-content mr-3">
 						<div
 							className="tab-pane fade show active"
 							id="buysell"

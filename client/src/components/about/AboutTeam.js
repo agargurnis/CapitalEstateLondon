@@ -10,18 +10,14 @@ class AboutTeam extends Component {
 						Why Capital Estate London?
 					</h3>
 					<div className="row pb-5">
-						<div className="col-4 text-right profile-pic">
-							<img
-								src={profilePic}
-								alt="Profile"
-								className="rounded-circle ml-5"
-							/>
+						<div className="col-sm-12 col-md-4 text-lg-right text-center profile-pic">
+							<img src={profilePic} alt="Profile" className="rounded-circle" />
 							<div className="profile-name">
 								<h5>Elena Calpa</h5>
 								<p style={{ color: '#50c9ff' }}>CEO</p>
 							</div>
 						</div>
-						<div className="col-8 text-left">
+						<div className="col-sm-12 col-md-8 text-lg-left text-center ">
 							<div className="about-why-bubble sb6">
 								<i className="fas fa-quote-left about-quote-left" />
 								<p>

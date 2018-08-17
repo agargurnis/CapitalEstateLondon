@@ -2,8 +2,9 @@ import React, { Component } from 'react';
 import PropertyCard from './PropertyCard';
 import GoogleMapReact from 'google-map-react';
 import PropertyMarker from './PropertyMarker';
-import SelectListGroup from '../common/SelectListGroup';
-
+import SelectStringListGroup from '../common/SelectStringListGroup';
+import SelectNumberListGroup from '../common/SelectNumberListGroup';
+import Moment from 'react-moment';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { getProperties } from '../../actions/propertyActions';
@@ -18,15 +19,18 @@ class PropertyPage extends Component {
 			minBeds: 0,
 			maxBeds: 20,
 			parking: 0,
+			property_status: '',
+			selectedMarker: null,
 			selectedProperty: null,
-			properties: [],
-			allProperties: [],
+			selectedImage: null,
 			searchValue: ''
 		};
 
 		this.onChange = this.onChange.bind(this);
 		this.handleSearch = this.handleSearch.bind(this);
 		this.selectProperty = this.selectProperty.bind(this);
+		this.openPropertyModal = this.openPropertyModal.bind(this);
+		this.selectImage = this.selectImage.bind(this);
 	}
 
 	componentDidMount() {
@@ -35,7 +39,8 @@ class PropertyPage extends Component {
 
 	selectProperty = property => {
 		this.setState({
-			selectedProperty: property
+			selectedProperty: property,
+			selectedMarker: property
 		});
 	};
 
@@ -49,7 +54,24 @@ class PropertyPage extends Component {
 		});
 	};
 
+	openPropertyModal = property => {
+		this.setState({
+			selectedMarker: property,
+			selectedImage: null
+		});
+	};
+
+	selectImage = image => {
+		this.setState({
+			selectedImage: image
+		});
+	};
+
 	render() {
+		const search = this.props.location.search;
+		const params = new URLSearchParams(search);
+		console.log(params);
+
 		const { properties, loading } = this.props.property;
 		let propertyContent;
 		let propertyMarkers;
@@ -90,7 +112,6 @@ class PropertyPage extends Component {
 						property.nr_of_bedrooms <= this.state.maxBeds &&
 						property.nr_of_parking >= this.state.parking)
 			);
-
 			propertyContent = filteredList.map(property => (
 				<PropertyCard
 					key={property._id}
@@ -98,19 +119,20 @@ class PropertyPage extends Component {
 					selectProperty={this.selectProperty}
 				/>
 			));
-
 			propertyMarkers = filteredList.map(property => {
 				return (
 					<PropertyMarker
 						key={property._id}
 						lat={property.lat}
 						lng={property.lon}
-						text={property.price}
+						property={property}
+						openPropertyModal={this.openPropertyModal}
 						selected={property === this.state.selectedProperty}
 					/>
 				);
 			});
 		}
+
 		// Select options for min beds
 		const minBedOptions = [
 			{ label: 'Any', value: 0 },
@@ -174,6 +196,12 @@ class PropertyPage extends Component {
 			{ label: '2', value: 2 },
 			{ label: '3', value: 3 }
 		];
+		// Select options for property status
+		const statusOptions = [
+			{ label: 'Any', value: 0 },
+			{ label: 'Available', value: 'Available' },
+			{ label: 'Under Development', value: 'Under Development' }
+		];
 
 		const zoom = 14;
 
@@ -191,13 +219,178 @@ class PropertyPage extends Component {
 
 		return (
 			<div>
+				{this.state.selectedMarker !== null ? (
+					<div
+						className="modal fade"
+						id="propertyModal"
+						tabIndex="-1"
+						role="dialog"
+						aria-labelledby="propertyModalLabel"
+						aria-hidden="true"
+					>
+						<div
+							className="modal-dialog modal-dialog-centered modal-lg"
+							role="document"
+						>
+							<div className="modal-content">
+								<div className="modal-header">
+									<h5
+										className="modal-title"
+										id="propertyModalLabel"
+										style={{ width: '65%' }}
+									>
+										{this.state.selectedMarker.address +
+											', ' +
+											this.state.selectedMarker.district +
+											', ' +
+											this.state.selectedMarker.post_code}
+									</h5>
+									<h5
+										className="modal-title text-right"
+										style={{ width: '35%' }}
+									>
+										Listed on:{' '}
+										<Moment format="DD/MM/YYYY">
+											{this.state.selectedMarker.date}
+										</Moment>
+									</h5>
+									<button
+										type="button"
+										className="close"
+										data-dismiss="modal"
+										aria-label="Close"
+									>
+										<span aria-hidden="true">&times;</span>
+									</button>
+								</div>
+								<div className="modal-body">
+									<div className="row">
+										<div className="col-12">
+											<img
+												src={
+													this.state.selectedImage !== null
+														? this.state.selectedImage
+														: this.state.selectedMarker.property_images[0]
+												}
+												alt="property"
+												style={{ width: '100%' }}
+											/>
+										</div>
+									</div>
+									<button
+										className="more-pictures-button mt-1"
+										type="button"
+										data-toggle="collapse"
+										data-target="#collapseMorePictures"
+										aria-expanded="false"
+										aria-controls="collapseMorePictures"
+									>
+										More Pictures
+									</button>
+									<div className="row collapse mx-0" id="collapseMorePictures">
+										{this.state.selectedMarker.property_images.map(image => {
+											return (
+												<div
+													key={this.state.selectedMarker._id}
+													className="col-3 my-1 px-1"
+												>
+													<img
+														src={image}
+														className="modal-images"
+														alt="rooms"
+														onClick={() => this.selectImage(image)}
+													/>
+												</div>
+											);
+										})}
+									</div>
+									<div className="row mx-0 mt-1">
+										<div className="col-6 text-center">
+											Price <br />{' '}
+											<p style={{ color: '#50c9ff', fontSize: '21px' }}>
+												£{this.state.selectedMarker.price}
+											</p>
+										</div>
+										<div className="col-6 text-center">
+											Ownership Type <br />
+											<p style={{ color: '#50c9ff', fontSize: '21px' }}>
+												{this.state.selectedMarker.ownership_type}
+											</p>
+										</div>
+									</div>
+									<div className="row mx-0">
+										<div className="col-3 text-center">
+											<i className="fas fa-bed modal-icon" />
+											<br />{' '}
+											<p style={{ fontSize: '18px' }}>
+												{this.state.selectedMarker.nr_of_bedrooms} Bedrooms
+											</p>
+										</div>
+										<div className="col-3 text-center">
+											<i className="fas fa-bath modal-icon" />
+											<br />{' '}
+											<p style={{ fontSize: '18px' }}>
+												{this.state.selectedMarker.nr_of_bathrooms} Bathrooms
+											</p>
+										</div>
+										<div className="col-3 text-center">
+											<i className="fas fa-drafting-compass modal-icon" />
+											<br />{' '}
+											<p style={{ fontSize: '18px' }}>
+												Area of {this.state.selectedMarker.area_sqm} m<sup>
+													2
+												</sup>
+											</p>
+										</div>
+										<div className="col-3 text-center">
+											<i className="fas fa-car modal-icon" />
+											<br />{' '}
+											<p style={{ fontSize: '18px' }}>
+												{this.state.selectedMarker.nr_of_parking}{' '}
+												{this.state.selectedMarker.nr_of_parking > 1
+													? 'Parking Spaces'
+													: 'Parking Space'}
+											</p>
+										</div>
+									</div>
+									<div className="row mx-0">
+										<div className="col-12">
+											{this.state.selectedMarker.description
+												.split(`\n`)
+												.map(paragraph => {
+													return (
+														<span key={this.state.selectedMarker._id}>
+															{paragraph}
+															<br />
+														</span>
+													);
+												})}
+										</div>
+									</div>
+								</div>
+								<div className="modal-footer">
+									<button
+										type="button"
+										className="btn btn-secondary"
+										data-dismiss="modal"
+									>
+										PDF Version
+									</button>
+									<button type="button" className="btn btn-primary">
+										Book a Viewing
+									</button>
+								</div>
+							</div>
+						</div>
+					</div>
+				) : null}
 				<div className="search-container">
 					<div className="row justify-content-center">
 						<div className="col-sm-10 col-xs-10 property-search-bar mr-0 pr-0">
 							<div className="search">
 								<input
 									type="text"
-									placeholder="You can search by street, district or post code..."
+									placeholder="Search by street, district or post code..."
 									value={this.state.searchValue}
 									onChange={this.handleSearch}
 								/>
@@ -220,7 +413,7 @@ class PropertyPage extends Component {
 					</div>
 					<div className="row collapse px-2" id="collapseMoreOptions">
 						<div className="col-sm col-xs-12">
-							<SelectListGroup
+							<SelectNumberListGroup
 								placeholder="Any"
 								name="minPrice"
 								value={this.state.minPrice}
@@ -230,7 +423,7 @@ class PropertyPage extends Component {
 							/>
 						</div>
 						<div className="col-sm col-xs-12">
-							<SelectListGroup
+							<SelectNumberListGroup
 								placeholder="Any"
 								name="maxPrice"
 								value={this.state.maxPrice}
@@ -240,7 +433,7 @@ class PropertyPage extends Component {
 							/>
 						</div>
 						<div className="col-sm col-xs-12">
-							<SelectListGroup
+							<SelectNumberListGroup
 								placeholder="Any"
 								name="minBeds"
 								value={this.state.minBeds}
@@ -250,7 +443,7 @@ class PropertyPage extends Component {
 							/>
 						</div>
 						<div className="col-sm col-xs-12">
-							<SelectListGroup
+							<SelectNumberListGroup
 								placeholder="Any"
 								name="maxBeds"
 								value={this.state.maxBeds}
@@ -260,13 +453,23 @@ class PropertyPage extends Component {
 							/>
 						</div>
 						<div className="col-sm col-xs-12">
-							<SelectListGroup
+							<SelectNumberListGroup
 								placeholder="Any"
 								name="parking"
 								value={this.state.parking}
 								onChange={this.onChange}
 								options={parkingOptions}
 								info="Parking"
+							/>
+						</div>
+						<div className="col-sm col-xs-12">
+							<SelectStringListGroup
+								placeholder="Any"
+								name="property_status"
+								value={this.state.property_status}
+								onChange={this.onChange}
+								options={statusOptions}
+								info="Status"
 							/>
 						</div>
 					</div>

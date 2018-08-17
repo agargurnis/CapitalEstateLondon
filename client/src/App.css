@@ -18,6 +18,20 @@
 	}
 }
 
+.modal {
+	background-color: rgba(0, 0, 0, 0.75);
+}
+.modal-backdrop {
+	position: relative !important;
+}
+.modal-images {
+	width: 100%;
+}
+.modal-images:hover {
+	opacity: 0.9;
+	cursor: pointer;
+}
+
 /* ---------- Nav Bar CSS ---------- */
 .nav-item-effect {
 	font-size: 1.5em;
@@ -527,6 +541,7 @@
 /* ---------- Properties Page CSS ---------- */
 .flex-wrapper {
 	display: flex;
+	background-color: #fff;
 }
 
 .properties-container {
@@ -633,23 +648,62 @@
 }
 
 .marker {
-	width: 108px;
+	width: 100px;
+	border: 4px solid #fff;
 	background-color: #fff;
-	border: 1px solid #999;
-	border-radius: 4px;
-	font-size: 18px;
+	padding: 1px;
+	transform: translate(-50%, -150%);
 	text-align: center;
-	padding: 4px 0;
+	border-radius: 4px;
+	font-size: 17px;
+	color: #000;
+	cursor: pointer;
+	position: relative;
 }
 .marker.selected {
 	position: relative;
 	background-color: #50c9ff;
 	z-index: 2;
-	border-color: #fff;
+	border-color: #50c9ff;
+}
+.marker.selected::before {
+	border-top: 10px solid #50c9ff;
+}
+
+.marker:before {
+	content: '';
+	width: 0px;
+	height: 0px;
+	position: absolute;
+	border-left: 10px solid transparent;
+	border-right: 10px solid transparent;
+	border-top: 10px solid #fff;
+	border-bottom: 10px solid transparent;
+	right: 40%;
+	bottom: -23px;
 }
 
 .card-icon {
 	color: #999;
+}
+
+.modal-icon {
+	color: #999;
+	font-size: 50px;
+}
+
+.more-pictures-button {
+	cursor: pointer;
+	width: 100%;
+	height: 40px;
+	background-color: #50c9ff;
+	color: #fff;
+}
+
+.more-pictures-button:hover {
+	background-color: #fff;
+	border-color: #50c9ff;
+	color: #50c9ff;
 }
 
 @media screen and (max-width: 780px) {
@@ -684,7 +738,7 @@
 	margin: 0 auto;
 }
 
-.modal-content {
+.admin-modal-content {
 	background-color: #343a40;
 	opacity: 0.95;
 	padding: 0 18px;

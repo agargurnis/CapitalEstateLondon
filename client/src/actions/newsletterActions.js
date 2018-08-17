@@ -9,7 +9,7 @@ import {
 } from './types';
 
 // Add subscriber to list
-export const addSubscriber = (newsletterData, history) => dispatch => {
+export const addSubscriber = newsletterData => dispatch => {
 	dispatch(clearErrors());
 	axios
 		.post('/api/newsletter', newsletterData)

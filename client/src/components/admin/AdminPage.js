@@ -55,7 +55,7 @@ class AdminPage extends Component {
 			<div className="admin-wrapper">
 				<div className="login-box text-center">
 					<div className="col-sm-8 main-section">
-						<div className="modal-content">
+						<div className="admin-modal-content">
 							<div className="col-12 user-img">
 								<a href="/">
 									<img src={sLogo} alt="logo" />

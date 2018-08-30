@@ -101,8 +101,14 @@ class PropertyPage extends Component {
 		const { properties, loading } = this.props.property;
 		const { lang } = this.props;
 		let propertyContent;
+		let propertyDescription;
 		let propertyMarkers;
 
+		if (lang === 'en' && this.state.selectedMarker !== null) {
+			propertyDescription = this.state.selectedMarker.description_en;
+		} else if (lang === 'ru' && this.state.selectedMarker !== null) {
+			propertyDescription = this.state.selectedMarker.description_ru;
+		}
 		if (properties === null || loading) {
 			propertyContent = <Spinner />;
 		} else {
@@ -435,16 +441,14 @@ class PropertyPage extends Component {
 										</div>
 										<div className="row mx-0">
 											<div className="col-12">
-												{this.state.selectedMarker.description
-													.split(`\n`)
-													.map((paragraph, i) => {
-														return (
-															<span key={i}>
-																{paragraph}
-																<br />
-															</span>
-														);
-													})}
+												{propertyDescription.split(`\n`).map((paragraph, i) => {
+													return (
+														<span key={i}>
+															{paragraph}
+															<br />
+														</span>
+													);
+												})}
 											</div>
 										</div>
 									</div>

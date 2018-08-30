@@ -25,7 +25,7 @@ class Searchbar extends Component {
 
 	searchProperties() {
 		this.props.history.push(
-			`/properties?keywords=${this.state.keywords}&minBeds=${
+			`/properties?&keywords=${this.state.keywords}&minBeds=${
 				this.state.minBeds
 			}&maxBeds=${this.state.maxBeds}&minPrice=${
 				this.state.minPrice

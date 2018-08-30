@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import queryString from 'query-string';
+import qs from 'qs';
 import ContactIconBox from './ContactIconBox';
 import ContactMap from './ContactMap';
 import ContactQueryForm from './ContactQueryForm';
@@ -10,7 +10,7 @@ import contactsPageMessages from '../../translations/contactsPageMessages';
 
 class ContactsPage extends Component {
 	componentDidMount() {
-		const query = queryString.parse(this.props.location.search);
+		const query = qs.parse(this.props.location.search);
 		if (Object.keys(query).length !== 0) {
 			scrollToComponent(this.ContactForm, {
 				offset: 100,

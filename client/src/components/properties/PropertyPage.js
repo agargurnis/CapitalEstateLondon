@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import queryString from 'query-string';
+import qs from 'qs';
 import PropertyCard from './PropertyCard';
 import GoogleMapReact from 'google-map-react';
 import PropertyMarker from './PropertyMarker';
@@ -43,7 +43,8 @@ class PropertyPage extends Component {
 	componentDidMount() {
 		this.props.getProperties();
 
-		const query = queryString.parse(this.props.location.search);
+		const query = qs.parse(this.props.location.search);
+		console.log(query);
 		if (Object.keys(query).length !== 0) {
 			this.setState({
 				minPrice: parseInt(query.minPrice, 10),
@@ -65,7 +66,8 @@ class PropertyPage extends Component {
 	};
 
 	showContactForm() {
-		this.props.history.push('/contacts?book');
+		window.location.assign('/contacts?book');
+		// this.props.history.push('/contacts?book');
 	}
 
 	onChangeStr(e) {
@@ -662,9 +664,7 @@ const mapStateToProps = state => ({
 	selectedProperty: state.selectedProperty
 });
 
-export default withRouter(
-	connect(
-		mapStateToProps,
-		{ getProperties }
-	)(PropertyPage)
-);
+export default connect(
+	mapStateToProps,
+	{ getProperties }
+)(withRouter(PropertyPage));

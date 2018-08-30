@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import { FormattedMessage } from 'react-intl';
 
 class ContactIconBox extends Component {
 	render() {
@@ -9,7 +10,12 @@ class ContactIconBox extends Component {
 					<div className="container">
 						<div className="row justify-content-center pt-5">
 							<div className="col-12">
-								<h2 className="contact-title ">Contact Us</h2>
+								<h2 className="contact-title ">
+									<FormattedMessage
+										id="contacts.title"
+										defaultMessage="Contact Us"
+									/>
+								</h2>
 							</div>
 						</div>
 						<div className="row icon-row">

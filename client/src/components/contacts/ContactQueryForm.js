@@ -1,6 +1,8 @@
 import React, { Component } from 'react';
 import TextFieldGroup from '../common/TextFieldGroup';
 import TextAreaFieldGroup from '../common/TextAreaFieldGroup';
+import { connect } from 'react-redux';
+import { FormattedMessage } from 'react-intl';
 
 class ContactQueryForm extends Component {
 	constructor(props) {
@@ -12,20 +14,6 @@ class ContactQueryForm extends Component {
 			message: ''
 		};
 		this.onChange = this.onChange.bind(this);
-		this.onSubmit = this.onSubmit.bind(this);
-	}
-
-	onSubmit(e) {
-		e.preventDefault();
-
-		const formData = {
-			name: this.state.name,
-			email: this.state.email,
-			phone_number: this.state.phone_number,
-			message: this.state.message
-		};
-		console.log(formData);
-		// this.props.createProfile(profileData, this.props.history);
 	}
 
 	onChange(e) {
@@ -33,58 +21,96 @@ class ContactQueryForm extends Component {
 	}
 
 	render() {
+		const { lang } = this.props;
 		return (
 			<div className="container">
 				<div className="row">
 					<div className="col-12">
-						<h3 className="query-title pt-5">Get In Touch</h3>
+						<h3 className="query-title pt-5">
+							<FormattedMessage
+								id="contacts.subTitle"
+								defaultMessage="Get In Touch"
+							/>
+						</h3>
 					</div>
 				</div>
-				<form onSubmit={this.onSubmit} className="query-form">
+				<form
+					method="POST"
+					action="//formspree.io/arcijs95@gmail.com"
+					className="query-form"
+				>
+					<input
+						type="hidden"
+						name="_language"
+						value={lang === 'en' ? `uk` : `ru`}
+					/>
 					<div className="row">
 						<div className="col">
 							<TextFieldGroup
-								placeholder="Name"
+								placeholder={lang === 'en' ? `Name` : `Ваше имя`}
 								name="name"
 								value={this.state.name}
 								onChange={this.onChange}
-								info="Full Name *"
+								info={
+									<FormattedMessage
+										id="contacts.fullName"
+										defaultMessage="Full Name *"
+									/>
+								}
 							/>
 						</div>
 						<div className="col">
 							<TextFieldGroup
-								placeholder="Email"
+								placeholder={lang === 'en' ? `Email` : `Эл. почта`}
 								name="email"
 								value={this.state.email}
 								onChange={this.onChange}
-								info="Email Address *"
+								info={
+									<FormattedMessage
+										id="contacts.email"
+										defaultMessage="Email Address *"
+									/>
+								}
 							/>
 						</div>
 						<div className="col">
 							<TextFieldGroup
-								placeholder="Number"
+								placeholder={lang === 'en' ? `Number` : `Номер`}
 								name="phone_number"
 								value={this.state.phone_number}
 								onChange={this.onChange}
-								info="Phone Number"
+								info={
+									<FormattedMessage
+										id="contacts.phone"
+										defaultMessage="Phone Number"
+									/>
+								}
 							/>
 						</div>
 					</div>
 					<div className="row">
 						<div className="col-12">
 							<TextAreaFieldGroup
-								placeholder="Message"
+								placeholder={lang === 'en' ? `Message` : `Сообщение`}
 								name="message"
 								value={this.state.message}
 								onChange={this.onChange}
-								info="Your Message"
+								info={
+									<FormattedMessage
+										id="contacts.message"
+										defaultMessage="Your Message"
+									/>
+								}
 							/>
 						</div>
 					</div>
 					<div className="row ">
 						<div className="col-12 ">
 							<button className="btn btn-light submit-button">
-								Send Message
+								<FormattedMessage
+									id="contacts.btn"
+									defaultMessage="Send Message"
+								/>
 							</button>
 						</div>
 					</div>
@@ -94,4 +120,8 @@ class ContactQueryForm extends Component {
 	}
 }
 
-export default ContactQueryForm;
+const mapStateToProps = state => ({
+	lang: state.locale.lang
+});
+
+export default connect(mapStateToProps)(ContactQueryForm);

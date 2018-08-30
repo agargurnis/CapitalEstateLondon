@@ -2,11 +2,13 @@ import { combineReducers } from 'redux';
 import authReducer from './authReducer';
 import errorReducer from './errorReducer';
 import propertyReducer from './propertyReducer';
-// import newsletterReducer from './newsletterReducer';
+import localeReducer from './localeReducer';
+import newsletterReducer from './newsletterReducer';
 
 export default combineReducers({
 	auth: authReducer,
 	property: propertyReducer,
-	// newsletter: newsletterReducer,
+	locale: localeReducer,
+	newsletter: newsletterReducer,
 	errors: errorReducer
 });

@@ -1,18 +1,47 @@
 import React, { Component } from 'react';
+import queryString from 'query-string';
 import ContactIconBox from './ContactIconBox';
 import ContactMap from './ContactMap';
 import ContactQueryForm from './ContactQueryForm';
+import scrollToComponent from 'react-scroll-to-component';
+import { IntlProvider } from 'react-intl';
+import { connect } from 'react-redux';
+import contactsPageMessages from '../../translations/contactsPageMessages';
 
 class ContactsPage extends Component {
+	componentDidMount() {
+		const query = queryString.parse(this.props.location.search);
+		if (Object.keys(query).length !== 0) {
+			scrollToComponent(this.ContactForm, {
+				offset: 100,
+				align: 'top',
+				duration: 500,
+				ease: 'inCirc'
+			});
+		}
+	}
+
 	render() {
+		const { lang } = this.props;
 		return (
-			<div>
-				<ContactMap />
-				<ContactIconBox />
-				<ContactQueryForm />
-			</div>
+			<IntlProvider locale={lang} messages={contactsPageMessages[lang]}>
+				<div>
+					<ContactMap />
+					<ContactIconBox />
+					<section
+						ref={section => {
+							this.ContactForm = section;
+						}}
+					/>
+					<ContactQueryForm />
+				</div>
+			</IntlProvider>
 		);
 	}
 }
 
-export default ContactsPage;
+const mapStateToProps = state => ({
+	lang: state.locale.lang
+});
+
+export default connect(mapStateToProps)(ContactsPage);

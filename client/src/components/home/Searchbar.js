@@ -3,36 +3,53 @@ import { withRouter } from 'react-router-dom';
 import TextFieldGroup from '../common/TextFieldGroup';
 import SelectStringListGroup from '../common/SelectStringListGroup';
 import SelectNumberListGroup from '../common/SelectNumberListGroup';
-// import PropTypes from 'prop-types';
+import { FormattedMessage } from 'react-intl';
+import { connect } from 'react-redux';
 
 class Searchbar extends Component {
 	constructor(props) {
 		super(props);
 		this.state = {
 			keywords: '',
-			property_status: '',
+			status: '',
 			parking: 0,
 			minBeds: 0,
 			maxBeds: 20,
 			minPrice: 0,
 			maxPrice: 100000000
 		};
-		this.onChange = this.onChange.bind(this);
+		this.onChangeStr = this.onChangeStr.bind(this);
+		this.onChangeInt = this.onChangeInt.bind(this);
 		this.searchProperties = this.searchProperties.bind(this);
 	}
 
 	searchProperties() {
-		this.props.history.push('/properties?minBeds=1&maxBeds=4');
+		this.props.history.push(
+			`/properties?keywords=${this.state.keywords}&minBeds=${
+				this.state.minBeds
+			}&maxBeds=${this.state.maxBeds}&minPrice=${
+				this.state.minPrice
+			}&maxPrice=${this.state.maxPrice}&parking=${this.state.parking}&status=${
+				this.state.status
+			}`
+		);
 	}
 
-	onChange(e) {
+	onChangeStr(e) {
 		this.setState({ [e.target.name]: e.target.value });
+	}
+
+	onChangeInt(e) {
+		this.setState({ [e.target.name]: parseInt(e.target.value, 10) });
 	}
 
 	render() {
 		// Select options for min beds
 		const minBedOptions = [
-			{ label: 'Any', value: 0 },
+			{
+				label: <FormattedMessage id="home.any" defaultMessage="Any" />,
+				value: 0
+			},
 			{ label: '1', value: 1 },
 			{ label: '2', value: 2 },
 			{ label: '3', value: 3 },
@@ -42,7 +59,10 @@ class Searchbar extends Component {
 		];
 		// Select options for max beds
 		const maxBedOptions = [
-			{ label: 'Any', value: 20 },
+			{
+				label: <FormattedMessage id="home.any" defaultMessage="Any" />,
+				value: 20
+			},
 			{ label: '1', value: 1 },
 			{ label: '2', value: 2 },
 			{ label: '3', value: 3 },
@@ -53,7 +73,10 @@ class Searchbar extends Component {
 		];
 		// Select options for max price
 		const maxPriceOptions = [
-			{ label: 'Any', value: 100000000 },
+			{
+				label: <FormattedMessage id="home.any" defaultMessage="Any" />,
+				value: 100000000
+			},
 			{ label: '£500,000', value: 500000 },
 			{ label: '£750,000', value: 750000 },
 			{ label: '£1,000,000', value: 1000000 },
@@ -72,7 +95,10 @@ class Searchbar extends Component {
 		];
 		// Select options for min price
 		const minPriceOptions = [
-			{ label: 'Any', value: 0 },
+			{
+				label: <FormattedMessage id="home.any" defaultMessage="Any" />,
+				value: 0
+			},
 			{ label: '£500,000', value: 500000 },
 			{ label: '£750,000', value: 750000 },
 			{ label: '£1,000,000', value: 1000000 },
@@ -88,45 +114,77 @@ class Searchbar extends Component {
 		];
 		// Select options for parking
 		const parkingOptions = [
-			{ label: 'Not Essential', value: 0 },
+			{
+				label: (
+					<FormattedMessage
+						id="home.notEssential"
+						defaultMessage="Not Essential"
+					/>
+				),
+				value: 0
+			},
 			{ label: '1', value: 1 },
 			{ label: '2', value: 2 },
 			{ label: '3', value: 3 }
 		];
 		// Select options for property status
 		const statusOptions = [
-			{ label: 'Property Status', value: 0 },
+			{
+				label: (
+					<FormattedMessage
+						id="home.propertyStatus"
+						defaultMessage="Property Status"
+					/>
+				),
+				value: 'Any'
+			},
 			{ label: 'Available', value: 'Available' },
 			{ label: 'Under Development', value: 'Under Development' }
 		];
 
 		return (
 			<div>
-				<div onClick={this.searchProperties} className="search-form">
+				<div className="search-form">
 					<div className="row justify-content-center">
 						<div className="col-1 ">
-							<button className="btn btn-light search-button">Search</button>
+							<button
+								onClick={this.searchProperties}
+								className="btn btn-light search-button"
+							>
+								<FormattedMessage id="home.search" defaultMessage="Search" />
+							</button>
 						</div>
 					</div>
 					<div className="row">
 						<div className="col-md-6 col-sm-6">
 							<TextFieldGroup
-								placeholder="Address, district or post code..."
+								placeholder={
+									this.props.lang === 'en'
+										? 'Address, district or post code...'
+										: `Адрес, район или почтовый индекс...`
+								}
 								name="keywords"
 								value={this.state.keywords}
-								onChange={this.onChange}
-								info="Keywords"
+								onChange={this.onChangeStr}
+								info={
+									<FormattedMessage
+										id="home.keywords"
+										defaultMessage="Keywords"
+									/>
+								}
 							/>
 						</div>
 
 						<div className="col-md-3 col-sm-6 hide-on-xs">
 							<SelectStringListGroup
 								placeholder="Any"
-								name="property_status"
-								value={this.state.property_status}
-								onChange={this.onChange}
+								name="status"
+								value={this.state.status}
+								onChange={this.onChangeStr}
 								options={statusOptions}
-								info="Status"
+								info={
+									<FormattedMessage id="home.status" defaultMessage="Status" />
+								}
 							/>
 						</div>
 						<div className="col-md-3 col-sm-6 hide-on-xs">
@@ -134,9 +192,14 @@ class Searchbar extends Component {
 								placeholder="Any"
 								name="parking"
 								value={this.state.parking}
-								onChange={this.onChange}
+								onChange={this.onChangeInt}
 								options={parkingOptions}
-								info="Parking"
+								info={
+									<FormattedMessage
+										id="home.parking"
+										defaultMessage="Parking"
+									/>
+								}
 							/>
 						</div>
 					</div>
@@ -146,9 +209,14 @@ class Searchbar extends Component {
 								placeholder="Any"
 								name="minPrice"
 								value={this.state.minPrice}
-								onChange={this.onChange}
+								onChange={this.onChangeInt}
 								options={minPriceOptions}
-								info="Min Price"
+								info={
+									<FormattedMessage
+										id="home.minPrice"
+										defaultMessage="Min Price"
+									/>
+								}
 							/>
 						</div>
 						<div className="col-sm-3 col-xs-12 hide-on-xs">
@@ -156,9 +224,14 @@ class Searchbar extends Component {
 								placeholder="Any"
 								name="maxPrice"
 								value={this.state.maxPrice}
-								onChange={this.onChange}
+								onChange={this.onChangeInt}
 								options={maxPriceOptions}
-								info="Max Price"
+								info={
+									<FormattedMessage
+										id="home.maxPrice"
+										defaultMessage="Max Price"
+									/>
+								}
 							/>
 						</div>
 						<div className="col-sm-3 col-xs-12 hide-on-xs">
@@ -166,9 +239,14 @@ class Searchbar extends Component {
 								placeholder="Any"
 								name="minBeds"
 								value={this.state.minBeds}
-								onChange={this.onChange}
+								onChange={this.onChangeInt}
 								options={minBedOptions}
-								info="Min Beds"
+								info={
+									<FormattedMessage
+										id="home.minBeds"
+										defaultMessage="Min Beds"
+									/>
+								}
 							/>
 						</div>
 						<div className="col-sm-3 col-xs-12 hide-on-xs">
@@ -176,9 +254,14 @@ class Searchbar extends Component {
 								placeholder="Any"
 								name="maxBeds"
 								value={this.state.maxBeds}
-								onChange={this.onChange}
+								onChange={this.onChangeInt}
 								options={maxBedOptions}
-								info="Max Beds"
+								info={
+									<FormattedMessage
+										id="home.maxBeds"
+										defaultMessage="Max Beds"
+									/>
+								}
 							/>
 						</div>
 					</div>
@@ -188,13 +271,8 @@ class Searchbar extends Component {
 	}
 }
 
-// Searchbar.propTypes = {
-// 	errors: PropTypes.object.isRequired
-// };
+const mapStateToProps = state => ({
+	lang: state.locale.lang
+});
 
-// const mapStateToProps = state => ({
-// 	profile: state.profile,
-// 	errors: state.errors
-// });
-
-export default withRouter(Searchbar);
+export default connect(mapStateToProps)(withRouter(Searchbar));

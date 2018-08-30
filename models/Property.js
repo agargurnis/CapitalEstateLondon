@@ -16,7 +16,8 @@ const PropertySchema = new Schema({
 		required: true
 	},
 	area_sqm: {
-		type: Number
+		type: Number,
+		required: true
 	},
 	nr_of_bedrooms: {
 		type: Number,
@@ -25,9 +26,6 @@ const PropertySchema = new Schema({
 	nr_of_bathrooms: {
 		type: Number,
 		required: true
-	},
-	nr_of_rooms: {
-		type: Number
 	},
 	nr_of_parking: {
 		type: Number,
@@ -38,9 +36,18 @@ const PropertySchema = new Schema({
 		required: true
 	},
 	ownership_type: {
-		type: String
+		type: String,
+		required: true
 	},
-	description: {
+	description_en: {
+		type: String,
+		required: true
+	},
+	description_ru: {
+		type: String,
+		required: true
+	},
+	status: {
 		type: String,
 		required: true
 	},

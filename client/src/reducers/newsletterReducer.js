@@ -1,30 +1,31 @@
 import {
-	ADD_SUBSCRIBER,
 	REMOVE_SUBSCRIBER,
-	GET_SUBSCRIBERS
+	GET_SUBSCRIBERS,
+	SUBS_LOADING
 } from '../actions/types';
 
 const initialState = {
 	subscribers: [],
-	subscriber: {}
+	loading: false
 };
 
 export default function(state = initialState, action) {
 	switch (action.type) {
+		case SUBS_LOADING:
+			return {
+				...state,
+				loading: true
+			};
 		case GET_SUBSCRIBERS:
 			return {
 				...state,
-				subscribers: action.payload
-			};
-		case ADD_SUBSCRIBER:
-			return {
-				...state,
-				subscribers: [action.payload, ...state.subscribers]
+				subscribers: action.payload,
+				loading: false
 			};
 		case REMOVE_SUBSCRIBER:
 			return {
 				...state,
-				subscribers: state.properties.filter(
+				subscribers: state.subscribers.filter(
 					subscriber => subscriber._id !== action.payload
 				)
 			};

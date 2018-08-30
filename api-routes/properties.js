@@ -47,18 +47,19 @@ router.post(
 			// If any errors return 400 with errors object
 			return res.status(400).json(errors);
 		}
-		// Create new post object
+		// Create new property object
 		const newProperty = new Property({
 			district: req.body.district,
 			address: req.body.address,
 			post_code: req.body.post_code,
 			area_sqm: req.body.area_sqm,
-			nr_of_rooms: req.body.nr_of_rooms,
+			status: req.body.status,
 			nr_of_bedrooms: req.body.nr_of_bedrooms,
 			nr_of_bathrooms: req.body.nr_of_bathrooms,
 			nr_of_parking: req.body.nr_of_parking,
 			ownership_type: req.body.ownership_type,
-			description: req.body.description,
+			description_en: req.body.description_en,
+			description_ru: req.body.description_ru,
 			price: req.body.price,
 			lat: req.body.lat,
 			lon: req.body.lon,
@@ -67,6 +68,74 @@ router.post(
 		console.log(newProperty);
 		// Save post to db
 		newProperty.save().then(property => res.json(property));
+	}
+);
+
+// @route   POST api/manageproperties/:property_id
+// @desc    Edit property
+// @access  Private
+router.post(
+	'/:property_id',
+	passport.authenticate('jwt', { session: false }),
+	upload.array('photos', 12),
+	(req, res) => {
+		const { errors, isValid } = validatePropertyInput(req.body);
+
+		// Check Validation
+		if (!isValid) {
+			// Return any errors with status 400
+			return res.status(400).json(errors);
+		}
+
+		Property.findById(req.params.property_id)
+			.then(property => {
+				if (!property) {
+					errors.noproperty = 'No property found';
+					return res.status(404).json(errors);
+				}
+				// else update
+				if (req.body.address) {
+					property.address = req.body.address;
+				}
+				if (req.body.post_code) {
+					property.post_code = req.body.post_code;
+				}
+				if (req.body.district) {
+					property.district = req.body.district;
+				}
+				if (req.body.area_sqm) {
+					property.area_sqm = req.body.area_sqm;
+				}
+				if (req.body.price) {
+					property.price = req.body.price;
+				}
+				if (req.body.status) {
+					property.status = req.body.status;
+				}
+				if (req.body.ownership_type) {
+					property.ownership_type = req.body.ownership_type;
+				}
+				if (req.body.nr_of_parking) {
+					property.nr_of_parking = req.body.nr_of_parking;
+				}
+				if (req.body.nr_of_bedrooms) {
+					property.nr_of_bedrooms = req.body.nr_of_bedrooms;
+				}
+				if (req.body.nr_of_bathrooms) {
+					property.nr_of_bathrooms = req.body.nr_of_bathrooms;
+				}
+				if (req.body.description_en) {
+					property.description_en = req.body.description_en;
+				}
+				if (req.body.description_ru) {
+					property.description_ru = req.body.description_ru;
+				}
+				if (req.files.length > 0) {
+					property.property_images = req.files.map(file => file.path);
+				}
+				property.save().then(updatedProperty => res.json(updatedProperty));
+			})
+			.catch(err => res.status(404).json({ property: 'No property found' }));
 	}
 );
 

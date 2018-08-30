@@ -30,7 +30,7 @@ SelectListGroup.propTypes = {
 	name: PropTypes.string.isRequired,
 	value: PropTypes.string.isRequired,
 	error: PropTypes.string,
-	info: PropTypes.string,
+	info: PropTypes.object,
 	onChange: PropTypes.func.isRequired,
 	options: PropTypes.array.isRequired
 };

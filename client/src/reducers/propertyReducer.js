@@ -9,7 +9,8 @@ import {
 const initialState = {
 	properties: [],
 	property: {},
-	loading: false
+	loading: false,
+	isHidden: false
 };
 
 export default function(state = initialState, action) {
@@ -23,13 +24,15 @@ export default function(state = initialState, action) {
 			return {
 				...state,
 				properties: action.payload,
-				loading: false
+				loading: false,
+				isHidden: false
 			};
 		case GET_PROPERTY:
 			return {
 				...state,
 				property: action.payload,
-				loading: false
+				loading: false,
+				isHidden: true
 			};
 		case CREATE_PROPERTY:
 			return {

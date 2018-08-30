@@ -31,7 +31,20 @@ export const getProperty = id => dispatch => {
 export const createProperty = (propertyData, history) => dispatch => {
 	axios
 		.post('/api/properties', propertyData)
-		.then(res => history.push('/dashboard'))
+		.then(res => history.push('/manageproperties'))
+		.catch(err =>
+			dispatch({
+				type: GET_ERRORS,
+				payload: err.response.data
+			})
+		);
+};
+
+// Edit property
+export const editProperty = (id, propertyData, history) => dispatch => {
+	axios
+		.post(`/api/properties/${id}`, propertyData)
+		.then(res => history.push('/manageproperties'))
 		.catch(err =>
 			dispatch({
 				type: GET_ERRORS,

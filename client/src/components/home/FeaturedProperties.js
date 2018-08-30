@@ -20,15 +20,22 @@ import kni7 from '../../featuredProperties/Knightsbridge/kinght-7.jpg';
 import kni8 from '../../featuredProperties/Knightsbridge/kinght-8.jpg';
 import kni9 from '../../featuredProperties/Knightsbridge/kinght-9.jpg';
 
+import { FormattedMessage } from 'react-intl';
+
 class FeaturedProperties extends Component {
 	render() {
 		return (
 			<div className="property-container">
 				<div className="underlined-title-blue mt-3">
-					<h1>Featured Properties</h1>
+					<h1>
+						<FormattedMessage
+							id="home.featuredProperties"
+							defaultMessage="Featured Properties"
+						/>
+					</h1>
 				</div>
 				<div className="row">
-					<div className="col-lg-4 col-md-12 the-card">
+					<div className="col-lg-4 col-md-12 the-card mb-4">
 						<div
 							id="carouselOneControls"
 							className="property-carousel carousel slide"
@@ -93,17 +100,17 @@ class FeaturedProperties extends Component {
 								Ealing Broadway, W5
 							</h4>
 							<p className="card-text text-center mx-2">
-								A breathtaking residential complex with modern architecture in
+								<FormattedMessage
+									id="home.featuredProperties.ealing"
+									defaultMessage="A breathtaking residential complex with modern architecture in
 								the heart of the popular Ealing district offers a truly 5-star
-								lifestyle.
+								lifestyle."
+								/>
 							</p>
-							<div className="text-center mb-4">
-								<button className="btn btn-info">More Details</button>
-							</div>
 						</div>
 					</div>
 
-					<div className="col-lg-4 col-md-12 the-card">
+					<div className="col-lg-4 col-md-12 the-card mb-4">
 						<div
 							id="carouselTwoControls"
 							className="property-carousel carousel slide"
@@ -203,17 +210,17 @@ class FeaturedProperties extends Component {
 								Knightsbridge, SW7
 							</h4>
 							<p className="card-text text-center mx-2">
-								Capital Estate London offers to your attention an exclusive
+								<FormattedMessage
+									id="home.featuredProperties.knightsbridge"
+									defaultMessage="Capital Estate London offers to your attention an exclusive
 								offer, which is not on the market! Full interior decoration,
-								Smart home system, Fully furnished.
+								Smart home system, Fully furnished."
+								/>
 							</p>
-							<div className="text-center mb-4">
-								<button className="btn btn-info">More Details</button>
-							</div>
 						</div>
 					</div>
 
-					<div className="col-lg-4 col-md-12 the-card">
+					<div className="col-lg-4 col-md-12 the-card mb-4">
 						<div
 							id="carouselThreeControls"
 							className="property-carousel carousel slide"
@@ -278,13 +285,13 @@ class FeaturedProperties extends Component {
 								Blackfriars, EC4
 							</h4>
 							<p className="card-text text-center mx-2">
-								A new business-class residential building in the financial
+								<FormattedMessage
+									id="home.featuredProperties.blackfriars"
+									defaultMessage="A new business-class residential building in the financial
 								center of London. All apartments are equipped with the latest
-								technology with the use of smart home systems.
+								technology with the use of smart home systems."
+								/>
 							</p>
-							<div className="text-center mb-4">
-								<button className="btn btn-info">More Details</button>
-							</div>
 						</div>
 					</div>
 				</div>

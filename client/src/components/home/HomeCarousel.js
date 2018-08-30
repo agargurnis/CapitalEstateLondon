@@ -3,6 +3,7 @@ import homeCarousel from '../images/home-carousel-overlay.jpg';
 import houseCarousel from '../images/house-carousel-overlay.jpg';
 import londonCarousel from '../images/london-carousel-overlay.jpg';
 import turkeyCarousel from '../images/turkey-carousel-overlay.jpg';
+import { FormattedMessage } from 'react-intl';
 
 class HomePageCarousel extends Component {
 	render() {
@@ -31,8 +32,18 @@ class HomePageCarousel extends Component {
 								alt="Home slide"
 							/>
 							<div className="carousel-caption d-none d-md-block">
-								<h5>Home</h5>
-								<p>..is the starting place of love, hope and dreams.</p>
+								<h5>
+									<FormattedMessage
+										id="home.homeSlide.h"
+										defaultMessage="Home"
+									/>
+								</h5>
+								<p>
+									<FormattedMessage
+										id="home.homeSlide.p"
+										defaultMessage="..is the starting place of love, hope and dreams."
+									/>
+								</p>
 							</div>
 						</div>
 						<div className="home-carousel-item carousel-item">
@@ -42,10 +53,18 @@ class HomePageCarousel extends Component {
 								alt="House slide"
 							/>
 							<div className="carousel-caption d-none d-md-block">
-								<h5>Find your dream house</h5>
+								<h5>
+									<FormattedMessage
+										id="home.houseSlide.h"
+										defaultMessage="Find your dream house"
+									/>
+								</h5>
 								<p>
-									It's not about how big the house is. It's about how happy the
-									home is.
+									<FormattedMessage
+										id="home.houseSlide.p"
+										defaultMessage="It's not about how big the house is. It's about how happy the
+									home is."
+									/>
 								</p>
 							</div>
 						</div>
@@ -56,8 +75,18 @@ class HomePageCarousel extends Component {
 								alt="London slide"
 							/>
 							<div className="carousel-caption d-none d-md-block">
-								<h5>London is calling you</h5>
-								<p>Live in one of the best cities in the world.</p>
+								<h5>
+									<FormattedMessage
+										id="home.londonSlide.h"
+										defaultMessage="London is calling you"
+									/>
+								</h5>
+								<p>
+									<FormattedMessage
+										id="home.londonSlide.p"
+										defaultMessage="Live in one of the best cities in the world."
+									/>
+								</p>
 							</div>
 						</div>
 						<div className="home-carousel-item carousel-item">
@@ -67,8 +96,18 @@ class HomePageCarousel extends Component {
 								alt="Turkey slide"
 							/>
 							<div className="carousel-caption d-none d-md-block">
-								<h5>Invest in your future</h5>
-								<p>Buy a house abroad which you can rent out.</p>
+								<h5>
+									<FormattedMessage
+										id="home.turkeySlide.h"
+										defaultMessage="Invest in your future"
+									/>
+								</h5>
+								<p>
+									<FormattedMessage
+										id="home.turkeySlide.p"
+										defaultMessage="Buy a house abroad which you can rent out."
+									/>
+								</p>
 							</div>
 						</div>
 					</div>

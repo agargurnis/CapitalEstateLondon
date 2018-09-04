@@ -58,7 +58,7 @@ class App extends Component {
 
 	componentDidMount() {
 		const currentRoute = this.props.location.pathname;
-		if (currentRoute === '/admin' && localStorage.jwtToken) {
+		if (currentRoute === '/admin' || localStorage.jwtToken) {
 			this.setState({ isAdmin: true });
 		}
 		if (localStorage.celLang === 'en') {

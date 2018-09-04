@@ -5,6 +5,8 @@ import {
 	GET_PROPERTIES,
 	PROPERTY_LOADING,
 	DELETE_PROPERTY,
+	CREATE_PROPERTY,
+	CLEAR_ERRORS,
 	GET_ERRORS
 } from './types';
 
@@ -29,9 +31,16 @@ export const getProperty = id => dispatch => {
 
 // Create property
 export const createProperty = (propertyData, history) => dispatch => {
+	dispatch(clearErrors());
+	dispatch(setPropertyLoading());
 	axios
 		.post('/api/properties', propertyData)
-		.then(res => history.push('/manageproperties'))
+		.then(res =>
+			dispatch({
+				type: CREATE_PROPERTY,
+				payload: res.data
+			})
+		)
 		.catch(err =>
 			dispatch({
 				type: GET_ERRORS,
@@ -42,6 +51,8 @@ export const createProperty = (propertyData, history) => dispatch => {
 
 // Edit property
 export const editProperty = (id, propertyData, history) => dispatch => {
+	dispatch(clearErrors());
+	dispatch(setPropertyLoading());
 	axios
 		.post(`/api/properties/${id}`, propertyData)
 		.then(res => history.push('/manageproperties'))
@@ -94,5 +105,12 @@ export const deleteProperty = id => dispatch => {
 export const setPropertyLoading = () => {
 	return {
 		type: PROPERTY_LOADING
+	};
+};
+
+// Clear errors
+export const clearErrors = () => {
+	return {
+		type: CLEAR_ERRORS
 	};
 };

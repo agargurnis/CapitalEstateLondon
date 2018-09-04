@@ -9,8 +9,9 @@ export default () => {
 				alt="Loading..."
 				style={{
 					width: '25%',
-					marginLeft: '35%',
-					marginTop: '35%',
+					marginLeft: '38%',
+					paddingTop: '10%',
+					paddingBottom: '10%',
 					display: 'block'
 				}}
 			/>

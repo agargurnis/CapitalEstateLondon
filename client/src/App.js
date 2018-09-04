@@ -43,6 +43,8 @@ if (localStorage.jwtToken) {
 	if (decoded.exp < currentTime) {
 		// Logout user
 		store.dispatch(logoutUser());
+		// Redirect to login page
+		// window.location.assign('/admin');
 	}
 }
 
@@ -56,7 +58,7 @@ class App extends Component {
 
 	componentDidMount() {
 		const currentRoute = this.props.location.pathname;
-		if (currentRoute === '/admin' || localStorage.jwtToken) {
+		if (currentRoute === '/admin' && localStorage.jwtToken) {
 			this.setState({ isAdmin: true });
 		}
 		if (localStorage.celLang === 'en') {

@@ -128,7 +128,7 @@ class EditProperty extends Component {
 										? {
 												height: '400px',
 												marginBottom: '10px',
-												backgroundImage: `url('../${
+												backgroundImage: `url('${
 													this.state.property_images[0]
 												}')`
 										  }

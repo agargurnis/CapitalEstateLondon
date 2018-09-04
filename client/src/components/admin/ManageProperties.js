@@ -98,8 +98,9 @@ class ManageProperties extends Component {
 		const { errors } = this.state;
 		const { properties, loading } = this.props.property;
 		let propertyContent;
+		let propertyForm;
 
-		if (properties === null || loading) {
+		if (properties === null) {
 			propertyContent = <Spinner />;
 		} else {
 			const filteredList = properties.filter(
@@ -118,174 +119,181 @@ class ManageProperties extends Component {
 				<AdminPropertyCard key={property._id} property={property} />
 			));
 		}
+		console.log(Object.keys(errors).length);
+		if (Object.keys(errors).length === 0 && loading) {
+			propertyForm = <Spinner />;
+		} else {
+			propertyForm = (
+				<form onSubmit={this.onSubmit}>
+					<div className="container">
+						<div className="row">
+							<div className="col-6">
+								<TextFieldGroup
+									placeholder="Address"
+									name="address"
+									value={this.state.address}
+									onChange={this.onChange}
+									error={errors.address}
+								/>
+							</div>
+							<div className="col-3">
+								<TextFieldGroup
+									placeholder="Latitude"
+									name="lat"
+									value={this.state.lat}
+									onChange={this.onChange}
+									error={errors.lat}
+								/>
+							</div>
+							<div className="col-3">
+								<TextFieldGroup
+									placeholder="Longditude"
+									name="lon"
+									value={this.state.lon}
+									onChange={this.onChange}
+									error={errors.lon}
+								/>
+							</div>
+						</div>
+						<div className="row">
+							<div className="col-3">
+								<TextFieldGroup
+									placeholder="Post Code"
+									name="post_code"
+									value={this.state.post_code}
+									onChange={this.onChange}
+									error={errors.post_code}
+								/>
+							</div>
+							<div className="col-3">
+								<TextFieldGroup
+									placeholder="District"
+									name="district"
+									value={this.state.district}
+									onChange={this.onChange}
+									error={errors.district}
+								/>
+							</div>
+
+							<div className="col-6">
+								<TextFieldGroup
+									placeholder="Status"
+									name="status"
+									value={this.state.status}
+									onChange={this.onChange}
+									error={errors.status}
+								/>
+							</div>
+						</div>
+						<div className="row">
+							<div className="col-3">
+								<TextFieldGroup
+									placeholder="Number of Bedrooms"
+									name="nr_of_bedrooms"
+									value={this.state.nr_of_bedrooms}
+									onChange={this.onChange}
+									error={errors.nr_of_bedrooms}
+								/>
+							</div>
+							<div className="col-3">
+								<TextFieldGroup
+									placeholder="Number of Bathrooms"
+									name="nr_of_bathrooms"
+									value={this.state.nr_of_bathrooms}
+									onChange={this.onChange}
+									error={errors.nr_of_bathrooms}
+								/>
+							</div>
+							<div className="col-3">
+								<TextFieldGroup
+									placeholder="Number of Parking Spaces"
+									name="nr_of_parking"
+									value={this.state.nr_of_parking}
+									onChange={this.onChange}
+									error={errors.nr_of_parking}
+								/>
+							</div>
+							<div className="col-3">
+								<TextFieldGroup
+									placeholder="Area in sqaure meters"
+									name="area_sqm"
+									value={this.state.area_sqm}
+									onChange={this.onChange}
+									error={errors.area_sqm}
+								/>
+							</div>
+						</div>
+						<div className="row">
+							<div className="col-6">
+								<TextFieldGroup
+									placeholder="Price"
+									name="price"
+									value={this.state.price}
+									onChange={this.onChange}
+									error={errors.price}
+								/>
+							</div>
+							<div className="col-6">
+								<TextFieldGroup
+									placeholder="Ownership Type"
+									name="ownership_type"
+									value={this.state.ownership_type}
+									onChange={this.onChange}
+									error={errors.ownership_type}
+								/>
+							</div>
+						</div>
+						<div className="row">
+							<div className="col-6">
+								<TextAreaFieldGroup
+									placeholder="Description in English"
+									name="description_en"
+									value={this.state.description_en}
+									onChange={this.onChange}
+									error={errors.description_en}
+								/>
+							</div>
+							<div className="col-6">
+								<TextAreaFieldGroup
+									placeholder="Description in Russian"
+									name="description_ru"
+									value={this.state.description_ru}
+									onChange={this.onChange}
+									error={errors.description_ru}
+								/>
+							</div>
+						</div>
+						<div className="form-group">
+							<label>Upload one or more images...</label>
+							<input
+								name="photos"
+								type="file"
+								multiple
+								ref={this.fileInput}
+								onChange={this.handleChange}
+								className="form-control-file"
+								id="imageUpload"
+							/>
+						</div>
+						<input
+							type="submit"
+							value="Submit"
+							className="btn btn-new-property btn-block my-4"
+						/>
+					</div>
+				</form>
+			);
+		}
 		return (
 			<div>
 				<AdminNavbar />
-				<div className="manage-properties">
+				<div className="manage-properties ">
 					<div className="create-property">
 						<Link to="/dashboard" className="btn btn-light mt-2 ml-5">
 							Go Back
 						</Link>
 						<h1 className="text-center mb-4">Add New Property</h1>
-
-						<form onSubmit={this.onSubmit}>
-							<div className="container">
-								<div className="row">
-									<div className="col-6">
-										<TextFieldGroup
-											placeholder="Address"
-											name="address"
-											value={this.state.address}
-											onChange={this.onChange}
-											error={errors.address}
-										/>
-									</div>
-									<div className="col-3">
-										<TextFieldGroup
-											placeholder="Latitude"
-											name="lat"
-											value={this.state.lat}
-											onChange={this.onChange}
-											error={errors.lat}
-										/>
-									</div>
-									<div className="col-3">
-										<TextFieldGroup
-											placeholder="Longditude"
-											name="lon"
-											value={this.state.lon}
-											onChange={this.onChange}
-											error={errors.lon}
-										/>
-									</div>
-								</div>
-								<div className="row">
-									<div className="col-3">
-										<TextFieldGroup
-											placeholder="Post Code"
-											name="post_code"
-											value={this.state.post_code}
-											onChange={this.onChange}
-											error={errors.post_code}
-										/>
-									</div>
-									<div className="col-3">
-										<TextFieldGroup
-											placeholder="District"
-											name="district"
-											value={this.state.district}
-											onChange={this.onChange}
-											error={errors.district}
-										/>
-									</div>
-
-									<div className="col-6">
-										<TextFieldGroup
-											placeholder="Status"
-											name="status"
-											value={this.state.status}
-											onChange={this.onChange}
-											error={errors.status}
-										/>
-									</div>
-								</div>
-								<div className="row">
-									<div className="col-3">
-										<TextFieldGroup
-											placeholder="Number of Bedrooms"
-											name="nr_of_bedrooms"
-											value={this.state.nr_of_bedrooms}
-											onChange={this.onChange}
-											error={errors.nr_of_bedrooms}
-										/>
-									</div>
-									<div className="col-3">
-										<TextFieldGroup
-											placeholder="Number of Bathrooms"
-											name="nr_of_bathrooms"
-											value={this.state.nr_of_bathrooms}
-											onChange={this.onChange}
-											error={errors.nr_of_bathrooms}
-										/>
-									</div>
-									<div className="col-3">
-										<TextFieldGroup
-											placeholder="Number of Parking Spaces"
-											name="nr_of_parking"
-											value={this.state.nr_of_parking}
-											onChange={this.onChange}
-											error={errors.nr_of_parking}
-										/>
-									</div>
-									<div className="col-3">
-										<TextFieldGroup
-											placeholder="Area in sqaure meters"
-											name="area_sqm"
-											value={this.state.area_sqm}
-											onChange={this.onChange}
-											error={errors.area_sqm}
-										/>
-									</div>
-								</div>
-								<div className="row">
-									<div className="col-6">
-										<TextFieldGroup
-											placeholder="Price"
-											name="price"
-											value={this.state.price}
-											onChange={this.onChange}
-											error={errors.price}
-										/>
-									</div>
-									<div className="col-6">
-										<TextFieldGroup
-											placeholder="Ownership Type"
-											name="ownership_type"
-											value={this.state.ownership_type}
-											onChange={this.onChange}
-											error={errors.ownership_type}
-										/>
-									</div>
-								</div>
-								<div className="row">
-									<div className="col-6">
-										<TextAreaFieldGroup
-											placeholder="Description in English"
-											name="description_en"
-											value={this.state.description_en}
-											onChange={this.onChange}
-											error={errors.description_en}
-										/>
-									</div>
-									<div className="col-6">
-										<TextAreaFieldGroup
-											placeholder="Description in Russian"
-											name="description_ru"
-											value={this.state.description_ru}
-											onChange={this.onChange}
-											error={errors.description_ru}
-										/>
-									</div>
-								</div>
-								<div className="form-group">
-									<label>Upload one or more images...</label>
-									<input
-										name="photos"
-										type="file"
-										multiple
-										ref={this.fileInput}
-										onChange={this.handleChange}
-										className="form-control-file"
-										id="imageUpload"
-									/>
-								</div>
-								<input
-									type="submit"
-									value="Submit"
-									className="btn btn-new-property btn-block my-4"
-								/>
-							</div>
-						</form>
+						{propertyForm}
 					</div>
 					<h1 className="text-center mt-5 mb-4" style={{ color: '#fff' }}>
 						Edit or Delete Current Properties

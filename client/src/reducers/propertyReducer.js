@@ -37,6 +37,7 @@ export default function(state = initialState, action) {
 		case CREATE_PROPERTY:
 			return {
 				...state,
+				loading: false,
 				properties: [action.payload, ...state.properties]
 			};
 		case DELETE_PROPERTY:

@@ -1,17 +1,40 @@
 const express = require('express');
 const router = express.Router();
+const aws = require('aws-sdk');
 const mongoose = require('mongoose');
 const passport = require('passport');
+// const { cancelLoading } = require('../client/src/actions/propertyActions');
+
+aws.config.update({
+	secretAccessKey: 'kQbKuUluiEFkHt/fvLx9GcSkfkuAMOvc8jPTgXwX',
+	accessKeyId: 'AKIAIWTJDJLIMEJ4C62A',
+	region: 'eu-west-2'
+});
 
 const multer = require('multer');
-const storage = multer.diskStorage({
-	destination: (req, file, cb) => {
-		cb(null, './uploads/');
+const multerS3 = require('multer-s3');
+const s3 = new aws.S3();
+
+const storage = multerS3({
+	s3: s3,
+	bucket: 'cel-bucket',
+	cacheControl: 'max-age=31536000',
+	contentType: multerS3.AUTO_CONTENT_TYPE,
+	metadata: function(req, file, cb) {
+		cb(null, { fieldName: file.fieldname });
 	},
-	filename: (req, file, cb) => {
-		cb(null, file.originalname);
+	key: function(req, file, cb) {
+		cb(null, Date.now().toString() + file.originalname);
 	}
 });
+// const storage = multer.diskStorage({
+// 	destination: (req, file, cb) => {
+// 		cb(null, './uploads/');
+// 	},
+// 	filename: (req, file, cb) => {
+// 		cb(null, file.originalname);
+// 	}
+// });
 const fileFilter = (req, file, cb) => {
 	if (file.mimetype === 'image/jpeg' || file.mimetype === 'image/png') {
 		cb(null, true);
@@ -47,6 +70,7 @@ router.post(
 			// If any errors return 400 with errors object
 			return res.status(400).json(errors);
 		}
+
 		// Create new property object
 		const newProperty = new Property({
 			district: req.body.district,
@@ -63,9 +87,10 @@ router.post(
 			price: req.body.price,
 			lat: req.body.lat,
 			lon: req.body.lon,
-			property_images: req.files.map(file => file.path)
+			property_images: req.files.map(file => file.location)
 		});
-		console.log(newProperty);
+		// console.log(req.files.map(file => typeof file.location));
+		// console.log(newProperty);
 		// Save post to db
 		newProperty.save().then(property => res.json(property));
 	}

@@ -56,7 +56,7 @@ class IndividualPropertyPage extends Component {
 									src={
 										property.property_images === undefined
 											? null
-											: `../${property.property_images[0]}`
+											: `${property.property_images[0]}`
 									}
 									alt="property"
 									style={{ width: '100%' }}

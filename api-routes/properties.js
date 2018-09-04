@@ -3,11 +3,11 @@ const router = express.Router();
 const aws = require('aws-sdk');
 const mongoose = require('mongoose');
 const passport = require('passport');
-// const { cancelLoading } = require('../client/src/actions/propertyActions');
+const keys = require('../config/keys');
 
 aws.config.update({
-	secretAccessKey: 'kQbKuUluiEFkHt/fvLx9GcSkfkuAMOvc8jPTgXwX',
-	accessKeyId: 'AKIAIWTJDJLIMEJ4C62A',
+	secretAccessKey: keys.s3SecretAccessKey,
+	accessKeyId: keys.s3AccessKeyId,
 	region: 'eu-west-2'
 });
 

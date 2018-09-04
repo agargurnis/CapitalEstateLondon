@@ -1,6 +1,6 @@
 import React from 'react';
 import classnames from 'classnames';
-import PropTypes from 'prop-types';
+// import PropTypes from 'prop-types';
 
 const TextFieldGroup = ({
 	name,
@@ -37,17 +37,17 @@ const TextFieldGroup = ({
 	);
 };
 
-TextFieldGroup.propTypes = {
-	name: PropTypes.string.isRequired,
-	value: PropTypes.string.isRequired,
-	error: PropTypes.string,
-	success: PropTypes.bool,
-	info: PropTypes.object,
-	placeholder: PropTypes.string,
-	type: PropTypes.string.isRequired,
-	onChange: PropTypes.func.isRequired,
-	disabled: PropTypes.string
-};
+// TextFieldGroup.propTypes = {
+// 	name: PropTypes.string.isRequired,
+// 	value: PropTypes.string.isRequired,
+// 	error: PropTypes.string,
+// 	success: PropTypes.bool,
+// 	info: PropTypes.object,
+// 	placeholder: PropTypes.string,
+// 	type: PropTypes.string.isRequired,
+// 	onChange: PropTypes.func.isRequired,
+// 	disabled: PropTypes.string
+// };
 
 TextFieldGroup.defaultProps = {
 	type: 'text'

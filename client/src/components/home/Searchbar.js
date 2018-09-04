@@ -44,10 +44,11 @@ class Searchbar extends Component {
 	}
 
 	render() {
+		const { lang } = this.props;
 		// Select options for min beds
 		const minBedOptions = [
 			{
-				label: <FormattedMessage id="home.any" defaultMessage="Any" />,
+				label: lang === 'en' ? 'Any' : 'Все',
 				value: 0
 			},
 			{ label: '1', value: 1 },
@@ -60,7 +61,7 @@ class Searchbar extends Component {
 		// Select options for max beds
 		const maxBedOptions = [
 			{
-				label: <FormattedMessage id="home.any" defaultMessage="Any" />,
+				label: lang === 'en' ? 'Any' : 'Все',
 				value: 20
 			},
 			{ label: '1', value: 1 },
@@ -74,7 +75,7 @@ class Searchbar extends Component {
 		// Select options for max price
 		const maxPriceOptions = [
 			{
-				label: <FormattedMessage id="home.any" defaultMessage="Any" />,
+				label: lang === 'en' ? 'Any' : 'Все',
 				value: 100000000
 			},
 			{ label: '£500,000', value: 500000 },
@@ -96,7 +97,7 @@ class Searchbar extends Component {
 		// Select options for min price
 		const minPriceOptions = [
 			{
-				label: <FormattedMessage id="home.any" defaultMessage="Any" />,
+				label: lang === 'en' ? 'Any' : 'Все',
 				value: 0
 			},
 			{ label: '£500,000', value: 500000 },
@@ -115,12 +116,7 @@ class Searchbar extends Component {
 		// Select options for parking
 		const parkingOptions = [
 			{
-				label: (
-					<FormattedMessage
-						id="home.notEssential"
-						defaultMessage="Not Essential"
-					/>
-				),
+				label: lang === 'en' ? 'Not Essential' : 'Не важно',
 				value: 0
 			},
 			{ label: '1', value: 1 },
@@ -130,12 +126,7 @@ class Searchbar extends Component {
 		// Select options for property status
 		const statusOptions = [
 			{
-				label: (
-					<FormattedMessage
-						id="home.propertyStatus"
-						defaultMessage="Property Status"
-					/>
-				),
+				label: lang === 'en' ? 'Property Status' : 'Статус недвижимости',
 				value: 'Any'
 			},
 			{ label: 'Available', value: 'Available' },

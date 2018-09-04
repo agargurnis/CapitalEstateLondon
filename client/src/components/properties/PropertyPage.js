@@ -36,6 +36,7 @@ class PropertyPage extends Component {
 		this.handleSearch = this.handleSearch.bind(this);
 		this.selectProperty = this.selectProperty.bind(this);
 		this.openPropertyModal = this.openPropertyModal.bind(this);
+		// this.openPropertyCardModal = this.openPropertyCardModal.bind(this);
 		this.selectImage = this.selectImage.bind(this);
 		this.showContactForm = this.showContactForm.bind(this);
 	}
@@ -67,7 +68,6 @@ class PropertyPage extends Component {
 
 	showContactForm() {
 		window.location.assign('/contacts?book');
-		// this.props.history.push('/contacts?book');
 	}
 
 	onChangeStr(e) {
@@ -150,6 +150,7 @@ class PropertyPage extends Component {
 					key={property._id}
 					property={property}
 					selectProperty={this.selectProperty}
+					selectedProperty={this.state.selectedProperty}
 				/>
 			));
 			propertyMarkers = filteredList.map(property => {
@@ -169,7 +170,7 @@ class PropertyPage extends Component {
 		// Select options for min beds
 		const minBedOptions = [
 			{
-				label: <FormattedMessage id="property.any" defaultMessage="Any" />,
+				label: lang === 'en' ? 'Any' : 'Все',
 				value: 0
 			},
 			{ label: '1', value: 1 },
@@ -182,7 +183,7 @@ class PropertyPage extends Component {
 		// Select options for max beds
 		const maxBedOptions = [
 			{
-				label: <FormattedMessage id="property.any" defaultMessage="Any" />,
+				label: lang === 'en' ? 'Any' : 'Все',
 				value: 20
 			},
 			{ label: '1', value: 1 },
@@ -196,7 +197,7 @@ class PropertyPage extends Component {
 		// Select options for max price
 		const maxPriceOptions = [
 			{
-				label: <FormattedMessage id="property.any" defaultMessage="Any" />,
+				label: lang === 'en' ? 'Any' : 'Все',
 				value: 100000000
 			},
 			{ label: '£500,000', value: 500000 },
@@ -218,7 +219,7 @@ class PropertyPage extends Component {
 		// Select options for min price
 		const minPriceOptions = [
 			{
-				label: <FormattedMessage id="property.any" defaultMessage="Any" />,
+				label: lang === 'en' ? 'Any' : 'Все',
 				value: 0
 			},
 			{ label: '£500,000', value: 500000 },
@@ -237,7 +238,7 @@ class PropertyPage extends Component {
 		// Select options for parking
 		const parkingOptions = [
 			{
-				label: <FormattedMessage id="property.any" defaultMessage="Any" />,
+				label: lang === 'en' ? 'Any' : 'Все',
 				value: 0
 			},
 			{ label: '1', value: 1 },
@@ -247,7 +248,7 @@ class PropertyPage extends Component {
 		// Select options for property status
 		const statusOptions = [
 			{
-				label: <FormattedMessage id="property.any" defaultMessage="Any" />,
+				label: lang === 'en' ? 'Any' : 'Все',
 				value: 'Any'
 			},
 			{ label: 'Available', value: 'Available' },

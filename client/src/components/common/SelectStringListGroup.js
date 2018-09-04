@@ -1,6 +1,6 @@
 import React from 'react';
 import classnames from 'classnames';
-import PropTypes from 'prop-types';
+// import PropTypes from 'prop-types';
 
 const SelectListGroup = ({ name, value, error, info, onChange, options }) => {
 	const selectOptions = options.map(option => (
@@ -26,13 +26,13 @@ const SelectListGroup = ({ name, value, error, info, onChange, options }) => {
 	);
 };
 
-SelectListGroup.propTypes = {
-	name: PropTypes.string.isRequired,
-	value: PropTypes.string.isRequired,
-	error: PropTypes.string,
-	info: PropTypes.object,
-	onChange: PropTypes.func.isRequired,
-	options: PropTypes.array.isRequired
-};
+// SelectListGroup.propTypes = {
+// 	name: PropTypes.string.isRequired,
+// 	value: PropTypes.string.isRequired,
+// 	error: PropTypes.string,
+// 	info: PropTypes.object,
+// 	onChange: PropTypes.func.isRequired,
+// 	options: PropTypes.array.isRequired
+// };
 
 export default SelectListGroup;

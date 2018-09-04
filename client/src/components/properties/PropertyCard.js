@@ -13,7 +13,14 @@ class PropertyCard extends Component {
 		};
 
 		return (
-			<div className="property-card" onClick={this.handleClick}>
+			<div
+				className="property-card"
+				data-toggle={this.props.selectedProperty === property ? 'modal' : null}
+				data-target={
+					this.props.selectedProperty === property ? '#propertyModal' : null
+				}
+				onClick={this.handleClick}
+			>
 				<div className="property-picture" style={style} />
 				<div className="property-info">
 					<div className="property-price ">
